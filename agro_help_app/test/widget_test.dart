@@ -10,10 +10,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:agro_help_app/main.dart';
 
+import '../lib/Pages/SubmitImage/submitImage.dart';
+
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(SubmitImage());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -1,1 +1,1 @@
-class controllerSubmition {}
+abstract class ControllerSubmitionBase {}

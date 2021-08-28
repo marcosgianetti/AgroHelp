@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Pages/SubmitImage/submitImage.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,9 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          //primarySwatch: Colors.greenAccent.shade700,
-          ),
-      //  home:
+        primarySwatch: Colors.greenAccent.shade700,
+      ),
+      home: SubmitImage(),
     );
   }
 }
