@@ -2,7 +2,7 @@ import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 import 'classifier.dart';
 
 class ClassifierQuant extends Classifier {
-  ClassifierQuant({int numThreads: 1}) : super(numThreads: numThreads);
+  ClassifierQuant({int numThreads: 1});
 
   @override
   String get modelName => 'SngleLabelModel.tflite';
@@ -12,7 +12,4 @@ class ClassifierQuant extends Classifier {
 
   @override
   NormalizeOp get postProcessNormalizeOp => NormalizeOp(0, 255);
-
-//????
-  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
