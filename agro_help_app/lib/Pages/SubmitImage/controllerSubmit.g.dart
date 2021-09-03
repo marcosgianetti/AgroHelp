@@ -12,13 +12,13 @@ mixin _$ControllerSumition on ControllerSubmitionBase, Store {
   final _$imageAtom = Atom(name: 'ControllerSubmitionBase.image');
 
   @override
-  File get image {
+  File? get image {
     _$imageAtom.reportRead();
     return super.image;
   }
 
   @override
-  set image(File value) {
+  set image(File? value) {
     _$imageAtom.reportWrite(value, super.image, () {
       super.image = value;
     });
@@ -27,13 +27,13 @@ mixin _$ControllerSumition on ControllerSubmitionBase, Store {
   final _$_imageWidgetAtom = Atom(name: 'ControllerSubmitionBase._imageWidget');
 
   @override
-  Image get _imageWidget {
+  Image? get _imageWidget {
     _$_imageWidgetAtom.reportRead();
     return super._imageWidget;
   }
 
   @override
-  set _imageWidget(Image value) {
+  set _imageWidget(Image? value) {
     _$_imageWidgetAtom.reportWrite(value, super._imageWidget, () {
       super._imageWidget = value;
     });
@@ -42,13 +42,13 @@ mixin _$ControllerSumition on ControllerSubmitionBase, Store {
   final _$categoryAtom = Atom(name: 'ControllerSubmitionBase.category');
 
   @override
-  Category get category {
+  Category? get category {
     _$categoryAtom.reportRead();
     return super.category;
   }
 
   @override
-  set category(Category value) {
+  set category(Category? value) {
     _$categoryAtom.reportWrite(value, super.category, () {
       super.category = value;
     });

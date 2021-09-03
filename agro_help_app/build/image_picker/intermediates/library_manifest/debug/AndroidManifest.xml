@@ -4,9 +4,6 @@
 
     <uses-sdk android:minSdkVersion="16" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <application>
         <provider
             android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"

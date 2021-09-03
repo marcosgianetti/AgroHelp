@@ -19,30 +19,30 @@ abstract class ControllerSubmitionBase with Store {
   var logger = Logger();
 
   @observable
-  File image;
+  File? image;
   final _picker = ImagePicker();
 
   @observable
-  Image _imageWidget;
-  Image get imageWidget => _imageWidget;
+  Image? _imageWidget;
+  Image get imageWidget => _imageWidget!;
 
-  img.Image fox;
+  img.Image? fox;
 
   @observable
-  Category category;
+  Category? category;
 
   @action
   Future getImage() async {
     final pickedFile = await _picker.getImage(source: ImageSource.gallery);
 
-    image = File(pickedFile.path);
-    _imageWidget = Image.file(image);
+    image = File(pickedFile!.path);
+    _imageWidget = Image.file(image!);
 
     _predict();
   }
 
   void _predict() async {
-    img.Image imageInput = img.decodeImage(image.readAsBytesSync());
+    img.Image imageInput = img.decodeImage(image!.readAsBytesSync())!;
     var pred = _classifier.predict(imageInput);
 
     this.category = pred;

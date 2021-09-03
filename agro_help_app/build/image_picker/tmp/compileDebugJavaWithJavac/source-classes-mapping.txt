@@ -14,12 +14,10 @@ io/flutter/plugins/imagepicker/ImagePickerDelegate.java
  io.flutter.plugins.imagepicker.ImagePickerDelegate
  io.flutter.plugins.imagepicker.ImagePickerDelegate$1
  io.flutter.plugins.imagepicker.ImagePickerDelegate$2
+ io.flutter.plugins.imagepicker.ImagePickerDelegate$2$1
  io.flutter.plugins.imagepicker.ImagePickerDelegate$3
- io.flutter.plugins.imagepicker.ImagePickerDelegate$3$1
  io.flutter.plugins.imagepicker.ImagePickerDelegate$4
- io.flutter.plugins.imagepicker.ImagePickerDelegate$5
  io.flutter.plugins.imagepicker.ImagePickerDelegate$FileUriResolver
- io.flutter.plugins.imagepicker.ImagePickerDelegate$IntentResolver
  io.flutter.plugins.imagepicker.ImagePickerDelegate$OnPathReadyListener
  io.flutter.plugins.imagepicker.ImagePickerDelegate$PermissionManager
 io/flutter/plugins/imagepicker/ImageResizer.java
