@@ -45,6 +45,7 @@ dependencies:
   tflite_flutter_helper: ^0.3.0
   cupertino_icons: ^1.0.3
   hexcolor: ^2.0.5
+  shared_preferences: ^2.0.7
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,15 @@ flutter:
       - assets/labels.txt
       - assets/SngleLabelModel.tflite
       - assets/MultLabelModel.tflite
+      - assets/ml/apple/apple.tflite
+      - assets/ml/apple/apple.txt
+      - assets/ml/corn/corn.tflite
+      - assets/ml/corn/corn.txt
+      - assets/ml/grape/grape.tflite
+      - assets/ml/grape/grape.txt
+      - assets/ml/tomato/tomato.tflite
+      - assets/ml/tomato/tomato.txt
+      
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

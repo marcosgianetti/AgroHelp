@@ -21,7 +21,7 @@ abstract class Classifier {
   late TfLiteType _inputType;
   late TfLiteType _outputType;
 
-  final String _labelsFileName = 'assets/labels.txt';
+  //final String _labelsFileName = 'assets/labels.txt';
 
   final int _labelsLength = 38;
 
@@ -30,6 +30,7 @@ abstract class Classifier {
   late List<String> labels;
 
   String get modelName;
+  String get labelsFileName;
 
   NormalizeOp get preProcessNormalizeOp;
   NormalizeOp get postProcessNormalizeOp;
@@ -63,7 +64,7 @@ abstract class Classifier {
   }
 
   Future<void> loadLabels() async {
-    labels = await FileUtil.loadLabels(_labelsFileName);
+    labels = await FileUtil.loadLabels(labelsFileName);
     if (labels.length == _labelsLength) {
       print('Labels loaded successfully');
     } else {

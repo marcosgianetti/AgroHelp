@@ -1,6 +1,5 @@
 import 'package:agro_help_app/Pages/HomeScream/dashborad.dart';
 import 'package:flutter/material.dart';
-import 'Pages/SubmitImage/submitImage.dart';
 
 void main() => runApp(MyApp());
 
