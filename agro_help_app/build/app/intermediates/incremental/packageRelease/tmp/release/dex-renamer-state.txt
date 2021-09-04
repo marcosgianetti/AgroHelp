@@ -1,0 +1,4 @@
+#Sat Sep 04 00:37:06 BRT 2021
+base.0=C\:\\MINHAS_COISAS\\Google_Drive\\MATERIAS\\TCC\\App\\AgroHelp\\AgroHelp\\agro_help_app\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

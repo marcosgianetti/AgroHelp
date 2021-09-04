@@ -97,12 +97,15 @@ class DashBoard extends StatelessWidget {
     return Container(
       //   height: 120,
       width: 130,
-      child: Container(
-        child: Card(
-          color: color,
-          child: Column(
-            children: [
-              ListTile(
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        color: color,
+        child: Column(
+          children: [
+            Container(
+              child: ListTile(
                 title: Image.asset(
                   imageRoute,
                   height: 120,
@@ -110,13 +113,13 @@ class DashBoard extends StatelessWidget {
                   fit: BoxFit.fitWidth,
                 ),
               ),
-              _utils.simpleText(name, fontSize: 18, fontWeight: FontWeight.bold)
-            ],
-          ),
-          elevation: 8,
-          shadowColor: Colors.green.shade400,
-          margin: EdgeInsets.all(8),
+            ),
+            _utils.simpleText(name, fontSize: 18, fontWeight: FontWeight.bold)
+          ],
         ),
+        elevation: 8,
+        shadowColor: color!,
+        margin: EdgeInsets.all(8),
       ),
     );
   }
