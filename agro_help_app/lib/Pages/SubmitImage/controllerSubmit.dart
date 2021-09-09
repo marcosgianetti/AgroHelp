@@ -12,7 +12,38 @@ part 'controllerSubmit.g.dart';
 class ControllerSumition = ControllerSubmitionBase with _$ControllerSumition;
 
 abstract class ControllerSubmitionBase with Store {
-  Classifier _classifier = ClassifierQuant();
+  static String modelName = 'MultLabelModel.tflite';
+  static String labelName = 'assets/labels.txt';
+  @observable
+  late String _title = 'Loading...';
+
+  @action
+  void modelSelected(int selected) {
+    if (selected == 0) {
+      modelName = 'ml/apple/apple.tflite';
+      labelName = 'assets/ml/apple/apple.txt';
+      _title = 'Maçã';
+    } else if (selected == 1) {
+      modelName = 'ml/corn/corn.tflite';
+      labelName = 'assets/ml/corn/corn.txt';
+      _title = 'Milho';
+    } else if (selected == 2) {
+      modelName = 'ml/grape/grape.tflite';
+      labelName = 'assets/ml/grape/grape.txt';
+      _title = 'Uva';
+    } else if (selected == 3) {
+      modelName = 'ml/tomato/tomato.tflite';
+      labelName = 'assets/ml/tomato/tomato.txt';
+      _title = 'Tomate';
+    }
+    print(modelName);
+    print(labelName);
+    _classifier = ClassifierQuant(fileModelName: modelName, fileLabelName: labelName);
+  }
+
+  String get title => _title;
+
+  Classifier _classifier = ClassifierQuant(fileModelName: modelName, fileLabelName: labelName);
 
   Classifier get classifier => _classifier;
 

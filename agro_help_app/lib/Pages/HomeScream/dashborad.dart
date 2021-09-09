@@ -83,12 +83,27 @@ class DashBoard extends StatelessWidget {
         InkWell(
           child: cardImage('assets/img/icons/apple.png', color: Colors.red.shade100, name: 'Maçã'),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitImage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitImage(selected: 0)));
           },
         ),
-        InkWell(child: cardImage('assets/img/icons/corn.png', color: Colors.yellow.shade100, name: 'Milho')),
-        InkWell(child: cardImage('assets/img/icons/grape.png', color: Colors.purple.shade100, name: 'Uva')),
-        InkWell(child: cardImage('assets/img/icons/tomato.png', color: Colors.red.shade100, name: 'Tomate')),
+        InkWell(
+          child: cardImage('assets/img/icons/corn.png', color: Colors.yellow.shade100, name: 'Milho'),
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitImage(selected: 1)));
+          },
+        ),
+        InkWell(
+          child: cardImage('assets/img/icons/grape.png', color: Colors.purple.shade100, name: 'Uva'),
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitImage(selected: 2)));
+          },
+        ),
+        InkWell(
+          child: cardImage('assets/img/icons/tomato.png', color: Colors.red.shade100, name: 'Tomate'),
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitImage(selected: 3)));
+          },
+        ),
       ],
     );
   }

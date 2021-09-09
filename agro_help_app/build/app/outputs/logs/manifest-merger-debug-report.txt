@@ -5,6 +5,7 @@ INJECTED from C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\a
 INJECTED from C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml:1:1-41:12
 INJECTED from C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml:1:1-41:12
 MERGED from C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml:1:1-41:12
+MERGED from [:shared_preferences] C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:tflite_flutter_helper] C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\build\tflite_flutter_helper\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:tflite_flutter] C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\build\tflite_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:image_picker] C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-19:12
@@ -54,7 +55,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\ma
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.1.0] C:\Users\marco\.gradle\caches\transforms-2\files-2.1\2e94107f30f39be366a17347c2bf100b\core-1.1.0\AndroidManifest.xml:24:18-86
 	android:label
-		ADDED from C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml:4:9-38
+		ADDED from C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml:4:9-34
 	android:icon
 		ADDED from C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml:5:9-43
 activity#com.example.agro_help_app.MainActivity
@@ -103,6 +104,8 @@ uses-sdk
 INJECTED from C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml
 INJECTED from C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml
+MERGED from [:shared_preferences] C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:tflite_flutter_helper] C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\build\tflite_flutter_helper\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:tflite_flutter_helper] C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\build\tflite_flutter_helper\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:tflite_flutter] C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\build\tflite_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44

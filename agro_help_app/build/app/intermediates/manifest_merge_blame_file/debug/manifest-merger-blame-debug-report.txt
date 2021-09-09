@@ -28,8 +28,8 @@
 20        android:debuggable="true"
 21        android:icon="@mipmap/ic_launcher"
 21-->C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml:5:9-43
-22        android:label="agro_help_app" >
-22-->C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml:4:9-38
+22        android:label="Agro Help" >
+22-->C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml:4:9-34
 23        <activity
 23-->C:\MINHAS_COISAS\Google_Drive\MATERIAS\TCC\App\AgroHelp\AgroHelp\agro_help_app\android\app\src\main\AndroidManifest.xml:6:9-34:20
 24            android:name="com.example.agro_help_app.MainActivity"

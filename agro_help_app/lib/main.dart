@@ -9,10 +9,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Agro Help',
       theme: ThemeData(
-          // bottomAppBarColor: Colors.blueAccent,
+          //bottomAppBarColor: Colors.red,
           buttonColor: Colors.purpleAccent,
           primaryColor: Colors.amber.shade600,
           primaryColorDark: Colors.amber.shade700,
+          primarySwatch: Colors.green,
           // cardColor: Colors.red,
           // splashColor: Colors.red,
           secondaryHeaderColor: Colors.green.shade700,
