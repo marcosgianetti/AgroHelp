@@ -1,4 +1,4 @@
-import 'package:agro_help_app/Pages/SubmitImage/submitImage.dart';
+import 'package:agro_help_app/Pages/Disease/List/listDesease.dart';
 import 'package:flutter/material.dart';
 import '../utils.dart';
 
@@ -110,7 +110,6 @@ class DashBoard extends StatelessWidget {
 
   Widget cardImage(String imageRoute, {@required Color? color, String name = ""}) {
     return Container(
-      //   height: 120,
       width: 130,
       child: Card(
         shape: RoundedRectangleBorder(

@@ -12,7 +12,7 @@ class SubmitImage extends StatelessWidget {
   late int example = 10;
 
   final controller = ControllerSumition();
-  late String _title;
+  // late String _title;
   @override
   Widget build(BuildContext context) {
     controller.modelSelected(selected);

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "612912176100",
+    "project_id": "plants-disease",
+    "storage_bucket": "plants-disease.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612912176100:android:f131eb80ae6dc0006885f1",
+        "android_client_info": {
+          "package_name": "com.agrohelp.agrohelpapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612912176100-fkr1etnf81539qa4tbfoshpfjp45g2ir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq31hPsoMEslGevgzbIE8GRzLHrghwIiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612912176100-fkr1etnf81539qa4tbfoshpfjp45g2ir.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

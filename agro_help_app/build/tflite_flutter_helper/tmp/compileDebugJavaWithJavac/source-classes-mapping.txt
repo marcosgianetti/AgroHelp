@@ -1,2 +1,0 @@
-com/tfliteflutter/tflite_flutter_helper/BuildConfig.java
- com.tfliteflutter.tflite_flutter_helper.BuildConfig
