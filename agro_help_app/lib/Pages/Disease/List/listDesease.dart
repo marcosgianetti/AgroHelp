@@ -1,5 +1,7 @@
 import 'package:agro_help_app/Pages/Disease/Details/deseaseDetail.dart';
 import 'package:agro_help_app/Pages/utils.dart';
+import 'package:agro_help_app/api/firebase_api.dart';
+import 'package:agro_help_app/model/firebase_file.dart';
 import 'package:agro_help_app/povider/diseaseProvider.dart';
 import 'package:agro_help_app/utils/doenca.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +28,8 @@ class SubmitImage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: _utils.simpleText(
-            Provider.of<DiseaseProvider>(context, listen: false).fruit.name,
-            fontSize: 36,
-          ),
+          child: _utils.simpleText(Provider.of<DiseaseProvider>(context, listen: false).fruit.name,
+              fontSize: 36, fontWeight: FontWeight.bold),
         ),
         actions: [Image.asset('assets/img/logo.png')],
       ),
@@ -67,12 +67,14 @@ class SubmitImage extends StatelessWidget {
                 return LinearProgressIndicator();
               },
             ),
-            Observer(builder: (_) {
-              return Text(
-                controller.category != null ? 'Confidence: ${controller.category!.score.toStringAsFixed(3)}' : '',
-                style: TextStyle(fontSize: 16),
-              );
-            }),
+            Observer(
+              builder: (_) {
+                return Text(
+                  controller.category != null ? 'Confidence: ${controller.category!.score.toStringAsFixed(3)}' : '',
+                  style: TextStyle(fontSize: 16),
+                );
+              },
+            ),
           ],
         ),
       ),

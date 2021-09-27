@@ -20,7 +20,7 @@ class DeseaseDetail extends StatelessWidget {
     return Scaffold(
       appBar: new AppBar(
         title: Center(
-          child: _utils.simpleText(_fruit.name, fontSize: 36),
+          child: _utils.simpleText(_fruit.name, fontSize: 36, fontWeight: FontWeight.bold),
         ),
         actions: [Image.asset('assets/img/logo.png')],
       ),
@@ -79,28 +79,73 @@ class DeseaseDetail extends StatelessWidget {
             new Center(
               child: Column(
                 children: [
-                  Container(
-                    child: _utils.simpleText(_disease.name, fontSize: 18),
-                  ),
-                  Card(
-                    child: SizedBox(
-                      height: height / 4,
-                      width: width - 50,
-                      child: Center(child: _utils.simpleText(_disease.caracteristc, fontSize: 20)),
+                  _utils.simpleText('${_disease.name}', fontSize: 24, fontWeight: FontWeight.w500),
+                  Visibility(
+                    visible: _disease.score > 0.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _utils.simpleText(
+                          'Taxa de confiabilidade: ${(_disease.score * 100).toString().split('.')[0]}%',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                   Card(
                     child: SizedBox(
                       height: height / 4,
                       width: width - 50,
-                      child: Center(child: _utils.simpleText(_disease.prevention, fontSize: 20)),
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _utils.simpleText('Caracteristica: ', fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          Center(child: _utils.simpleText(_disease.caracteristc, fontSize: 16)),
+                        ],
+                      ),
                     ),
                   ),
                   Card(
                     child: SizedBox(
                       height: height / 4,
                       width: width - 50,
-                      child: Center(child: _utils.simpleText(_disease.treatement, fontSize: 20)),
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _utils.simpleText('Caracteristica: ', fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          Center(child: _utils.simpleText('Prevenção: ' + _disease.prevention, fontSize: 16)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Card(
+                    child: SizedBox(
+                      height: height / 4,
+                      width: width - 50,
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _utils.simpleText('Caracteristica: ', fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          Center(
+                              child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: _utils.simpleText('Tratamento: ' + _disease.treatement, fontSize: 16),
+                          )),
+                        ],
+                      ),
                     ),
                   ),
                 ],

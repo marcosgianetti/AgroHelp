@@ -24,21 +24,6 @@ mixin _$ControllerSumition on ControllerSubmitionBase, Store {
     });
   }
 
-  final _$fruitAtom = Atom(name: 'ControllerSubmitionBase.fruit');
-
-  @override
-  Fruit get fruit {
-    _$fruitAtom.reportRead();
-    return super.fruit;
-  }
-
-  @override
-  set fruit(Fruit value) {
-    _$fruitAtom.reportWrite(value, super.fruit, () {
-      super.fruit = value;
-    });
-  }
-
   final _$imageAtom = Atom(name: 'ControllerSubmitionBase.image');
 
   @override
@@ -108,7 +93,6 @@ mixin _$ControllerSumition on ControllerSubmitionBase, Store {
   @override
   String toString() {
     return '''
-fruit: ${fruit},
 image: ${image},
 category: ${category}
     ''';
