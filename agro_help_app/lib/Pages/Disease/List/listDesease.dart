@@ -1,10 +1,12 @@
 import 'package:agro_help_app/Pages/Disease/Details/deseaseDetail.dart';
 import 'package:agro_help_app/Pages/utils.dart';
+import 'package:agro_help_app/povider/diseaseProvider.dart';
+import 'package:agro_help_app/utils/doenca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:provider/provider.dart';
 
 import 'controllerSubmit.dart';
 
@@ -24,45 +26,23 @@ class SubmitImage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: _utils.simpleText(controller.title, fontSize: 36),
+          child: _utils.simpleText(
+            Provider.of<DiseaseProvider>(context, listen: false).fruit.name,
+            fontSize: 36,
+          ),
         ),
         actions: [Image.asset('assets/img/logo.png')],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Observer(builder: (_) {
-              return Center(
-                child: controller.image == null
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'No image selected.',
-                          style: GoogleFonts.montserrat(fontSize: 18),
-                        ),
-                      )
-                    : Container(
-                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height / 2),
-                        decoration: BoxDecoration(
-                          border: Border.all(),
-                        ),
-                        child: controller.imageWidget,
-                      ),
-              );
-            }),
-            SizedBox(
-              height: 36,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
+              child: Center(
+                child: _utils.simpleText('Listagem de doenças', fontSize: 24, fontWeight: FontWeight.w600),
+              ),
             ),
-            Observer(builder: (_) {
-              return Text(
-                controller.category != null ? controller.category!.label : '',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-              );
-            }),
-            SizedBox(
-              height: 8,
-            ),
-            listdDeseas(),
+            _listdDeseas(context),
             StreamBuilder(
               stream: FirebaseFirestore.instance.collection("Apple_CedarAppleRust").snapshots(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -70,6 +50,7 @@ class SubmitImage extends StatelessWidget {
                   return Text('Error ' + snapshot.error.toString());
                 } else if (snapshot.hasData) {
                   final docs = snapshot.data!.docs;
+
                   return ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -98,71 +79,87 @@ class SubmitImage extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.fromLTRB(24, 8, 24, 8),
         child: Tooltip(
-          message: "Enviar imagem",
+          message: "Classificar por imagem",
           child: ElevatedButton(
             onPressed: () {
-              controller.getImage();
+              controller.getImage(context);
             },
-            child: _utils.simpleText("Enviar uma imagem", color: Colors.white, fontSize: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Icon(Icons.camera_alt),
+                ),
+                _utils.simpleText("Classificar por imagem", color: Colors.white, fontSize: 16),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _doencaCard(BuildContext context, {nomeDoenca}) {
-    return GestureDetector(
-      child: Card(
-        child: Container(
-          width: witdh * 0.9,
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  color: Colors.blue,
-                  child: SizedBox(
-                    width: witdh * 0.2,
-                    height: witdh * 0.2,
-                  ),
+  Widget _doencaCard(BuildContext context, {dynamic nomeDoenca}) {
+    return Card(
+      child: Container(
+        width: witdh * 0.9,
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                color: Colors.blue,
+                child: SizedBox(
+                  width: witdh * 0.2,
+                  height: witdh * 0.3,
                 ),
               ),
-              Container(
-                width: witdh * 0.7,
-                child: Column(
-                  children: [
-                    Container(alignment: Alignment.bottomLeft, child: _utils.simpleText(nomeDoenca, fontSize: 18)),
-                    _utils.simpleText('A doenca x é causada por y, resultando em z', fontSize: 16)
-                  ],
-                ),
+            ),
+            Container(
+              width: witdh * 0.7,
+              child: Column(
+                children: [
+                  Container(
+                      alignment: Alignment.bottomLeft,
+                      child: _utils.simpleText(
+                        nomeDoenca['doenca'],
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      )),
+                  _catacterisitica(doenca: nomeDoenca['doenca'])
+                  //_utils.simpleText('A doenca x é causada por y, resultando em z', fontSize: 16)
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => DeseaseDetail()));
-      },
     );
   }
 
-  Widget listdDeseas() {
-    Map<int, String> plantsList = {0: 'Apple', 1: 'Corn', 2: 'Grape', 3: 'Tomato'};
+  Widget _listdDeseas(BuildContext context) {
+//    Map<int, String> plantsList = {0: 'Apple', 1: 'Corn', 2: 'Grape', 3: 'Tomato'};
 
     try {
       return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection(plantsList[selected]!).snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection(Provider.of<DiseaseProvider>(context, listen: false).fruit.dbName)
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasError) {
-            return Text('Error ' + snapshot.error.toString());
+            return _utils.simpleText('Error ' + snapshot.error.toString());
           }
 
           switch (snapshot.connectionState) {
             case ConnectionState.none:
-              return Text('Verifique sua conecxão com a internet');
+              return _utils.simpleText('Verifique sua conecxão com a internet');
 
             case ConnectionState.waiting:
-              return LinearProgressIndicator();
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: LinearProgressIndicator(),
+              );
 
             case ConnectionState.active:
               if (snapshot.hasData) {
@@ -172,40 +169,104 @@ class SubmitImage extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: docs.length,
                   itemBuilder: (_, i) {
-                    return _doencaCard(context, nomeDoenca: docs[i]['doenca']);
-                    /*   ListTile(
-                      title: Text(docs[i]['doenca']),
-                    );*/
+                    return _doencaCard(context, nomeDoenca: docs[i]);
                   },
                 );
               } else {
-                return Text('Algo deu errado, tente mais tarde :(');
+                return _utils.simpleText('Algo deu errado, tente mais tarde :(');
               }
-            /*  case ConnectionState.done:
-              if (snapshot.hasData) {
-                final docs = snapshot.data!.docs;
-                return ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: docs.length,
-                  itemBuilder: (_, i) {
-                    return ListTile(
-                      title: Text(docs[i]['doenca']),
-                    );
-                  },
-                );
-              } else {
-                return Text('Algo deu errado, tente mais tarde :(');
-              }*/
-
             default:
-              return Text('Algo deu errado, tente mais tarde :(');
+              return _utils.simpleText('Algo deu errado, tente mais tarde :(');
           }
         },
       );
     } catch (e) {
-      return Text('Algo deu errado, tente mais tarde :(');
+      return _utils.simpleText('Algo deu errado, tente mais tarde :(');
     }
+  }
+
+  Widget _catacterisitica({String? doenca}) {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection(doenca!).snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return CircularProgressIndicator();
+          case ConnectionState.active:
+            if (snapshot.hasData) {
+              try {
+                final docs = snapshot.data!.docs;
+                Disease disease = new Disease();
+                disease.name = doenca;
+                disease.caracteristc = docs[0].data()['caracteristica'] ?? 'Dados não definidos';
+                disease.treatement = docs[0].data()['combate'] ?? 'Dados não definidos';
+                disease.prevention = docs[0].data()['evitar'] ?? 'Dados não definidos';
+                Provider.of<DiseaseProvider>(context, listen: false).fruit.desease.add(disease);
+
+                return GestureDetector(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                        child: _utils.simpleText(
+                          'Caracteristica: ' + '${disease.caracteristc}',
+                          fontSize: 16,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                        child: _utils.simpleText(
+                          'Combate: ' + '${disease.treatement}',
+                          fontSize: 14,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                        child: _utils.simpleText(
+                          'Prevenção: ' + '${disease.prevention}',
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    Provider.of<DiseaseProvider>(context, listen: false).changeSelectedDesease(disease);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => DeseaseDetail()));
+                  },
+                );
+              } catch (e) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                  child: _utils.simpleText(
+                    'Erro ao carregar dados, verifique sua conexção com a internet!',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                  ),
+                );
+              }
+            }
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+              child: _utils.simpleText(
+                'Erro ao carregar dados, verifique sua conexção com a internet!',
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+              ),
+            );
+          default:
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+              child: _utils.simpleText(
+                'Erro ao carregar dados, verifique sua conexção com a internet!',
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+              ),
+            );
+        }
+      },
+    );
   }
 
   Future<bool> check() async {

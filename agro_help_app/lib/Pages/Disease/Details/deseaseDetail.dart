@@ -1,5 +1,8 @@
+import 'package:agro_help_app/povider/diseaseProvider.dart';
+import 'package:agro_help_app/utils/doenca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import '../../utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -12,11 +15,12 @@ class DeseaseDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
+    Fruit _fruit = Provider.of<DiseaseProvider>(context, listen: false).fruit;
+    Disease _disease = Provider.of<DiseaseProvider>(context, listen: false).selectedDesease;
     return Scaffold(
       appBar: new AppBar(
         title: Center(
-          child: _utils.simpleText('Nome Fruta', fontSize: 36),
+          child: _utils.simpleText(_fruit.name, fontSize: 36),
         ),
         actions: [Image.asset('assets/img/logo.png')],
       ),
@@ -76,27 +80,27 @@ class DeseaseDetail extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    child: _utils.simpleText('Nome da doenca', fontSize: 18),
+                    child: _utils.simpleText(_disease.name, fontSize: 18),
                   ),
                   Card(
                     child: SizedBox(
                       height: height / 4,
                       width: width - 50,
-                      child: Center(child: _utils.simpleText('Carcteristica', fontSize: 20)),
+                      child: Center(child: _utils.simpleText(_disease.caracteristc, fontSize: 20)),
                     ),
                   ),
                   Card(
                     child: SizedBox(
                       height: height / 4,
                       width: width - 50,
-                      child: Center(child: _utils.simpleText('Motivos', fontSize: 20)),
+                      child: Center(child: _utils.simpleText(_disease.prevention, fontSize: 20)),
                     ),
                   ),
                   Card(
                     child: SizedBox(
                       height: height / 4,
                       width: width - 50,
-                      child: Center(child: _utils.simpleText('Como tratar', fontSize: 20)),
+                      child: Center(child: _utils.simpleText(_disease.treatement, fontSize: 20)),
                     ),
                   ),
                 ],
