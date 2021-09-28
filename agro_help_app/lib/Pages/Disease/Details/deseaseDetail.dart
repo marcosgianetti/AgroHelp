@@ -2,21 +2,38 @@ import 'package:agro_help_app/povider/diseaseProvider.dart';
 import 'package:agro_help_app/utils/doenca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import '../../utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-Utils _utils = new Utils();
+import 'controllerDetails.dart';
 
-class DeseaseDetail extends StatelessWidget {
+Utils _utils = new Utils();
+ControllerDeails _controller = ControllerDeails();
+
+class DeseaseDetail extends StatefulWidget {
   const DeseaseDetail({Key? key}) : super(key: key);
 
+  @override
+  _DeseaseDetailState createState() => _DeseaseDetailState();
+}
+
+class _DeseaseDetailState extends State<DeseaseDetail> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     Fruit _fruit = Provider.of<DiseaseProvider>(context, listen: false).fruit;
     Disease _disease = Provider.of<DiseaseProvider>(context, listen: false).selectedDesease;
+
+    _controller.loadImages(context, width: height / 3, height: height / 3);
+    @override
+    void dispose() {
+      super.dispose();
+      _controller.cleanImages();
+    }
+
     return Scaffold(
       appBar: new AppBar(
         title: Center(
@@ -29,51 +46,21 @@ class DeseaseDetail extends StatelessWidget {
           children: [
             Container(
               height: height / 3,
-              child: Container(
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    autoPlay: true,
-                    aspectRatio: 2.0,
-                    enlargeCenterPage: true,
-                  ),
-                  items: [
-                    Card(
-                      child: SizedBox(
-                        height: 400,
-                        width: 400,
-                        child: Center(child: _utils.simpleText('foto', fontSize: 20)),
-                      ),
-                    ),
-                    Card(
-                      child: SizedBox(
-                        height: 400,
-                        width: 400,
-                        child: Center(child: _utils.simpleText('foto', fontSize: 20)),
-                      ),
-                    ),
-                    Card(
-                      child: SizedBox(
-                        height: 400,
-                        width: 400,
-                        child: Center(child: _utils.simpleText('foto', fontSize: 20)),
-                      ),
-                    ),
-                    Card(
-                      child: SizedBox(
-                        height: 400,
-                        width: 400,
-                        child: Center(child: _utils.simpleText('foto', fontSize: 20)),
-                      ),
-                    ),
-                    Card(
-                      child: SizedBox(
-                        height: 400,
-                        width: 400,
-                        child: Center(child: _utils.simpleText('foto', fontSize: 20)),
-                      ),
-                    ),
-                  ],
-                ),
+              child: //Container(child: _utils.onhjkaseImage(Provider.of<DiseaseProvider>(context, listen: false).url)
+
+                  Observer(
+                builder: (_) {
+                  return _controller.images.length > 0
+                      ? CarouselSlider(
+                          options: CarouselOptions(
+                            autoPlay: _controller.images.length > 1,
+                            aspectRatio: 16 / 9,
+                            enlargeCenterPage: true,
+                          ),
+                          items: _controller.images,
+                        )
+                      : Center(child: CircularProgressIndicator());
+                },
               ),
             ),
             new Center(
@@ -118,7 +105,7 @@ class DeseaseDetail extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: _utils.simpleText('Caracteristica: ', fontSize: 16, fontWeight: FontWeight.w500),
+                              child: _utils.simpleText('Prevenção: ', fontSize: 16, fontWeight: FontWeight.w500),
                             ),
                           ),
                           Center(child: _utils.simpleText('Prevenção: ' + _disease.prevention, fontSize: 16)),
@@ -136,7 +123,7 @@ class DeseaseDetail extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: _utils.simpleText('Caracteristica: ', fontSize: 16, fontWeight: FontWeight.w500),
+                              child: _utils.simpleText('Tratamento: ', fontSize: 16, fontWeight: FontWeight.w500),
                             ),
                           ),
                           Center(

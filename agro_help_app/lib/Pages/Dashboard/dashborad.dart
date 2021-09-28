@@ -27,7 +27,7 @@ class DashBoard extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 190, child: _imagensDashboard(context)),
-            FutureBuilder<List<FirebaseFile>>(
+            /*        FutureBuilder<List<FirebaseFile>>(
               future: futureFiles,
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
@@ -53,7 +53,7 @@ class DashBoard extends StatelessWidget {
                     );
                 }
               },
-            ),
+            ),*/
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
@@ -62,7 +62,7 @@ class DashBoard extends StatelessWidget {
                   width: width - 50,
                   //       color: Colors.amber.shade100,
                   child: Center(
-                    child: Text('Clima'),
+                    child: _utils.simpleText('Widget de Clima', fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -75,7 +75,7 @@ class DashBoard extends StatelessWidget {
                   width: width - 50,
                   //        color: Colors.amber.shade100,
                   child: Center(
-                    child: Text('Noticias'),
+                    child: _utils.simpleText('Widget de Notícias', fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

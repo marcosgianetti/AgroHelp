@@ -1,7 +1,5 @@
 import 'package:agro_help_app/Pages/Disease/Details/deseaseDetail.dart';
 import 'package:agro_help_app/Pages/utils.dart';
-import 'package:agro_help_app/api/firebase_api.dart';
-import 'package:agro_help_app/model/firebase_file.dart';
 import 'package:agro_help_app/povider/diseaseProvider.dart';
 import 'package:agro_help_app/utils/doenca.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +7,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:provider/provider.dart';
-
+//https://www.youtube.com/watch?v=YA_fHCF_EYc&ab_channel=JohannesMilke
 import 'controllerSubmit.dart';
 
 Utils _utils = new Utils();
@@ -106,35 +104,37 @@ class SubmitImage extends StatelessWidget {
     return Card(
       child: Container(
         width: witdh * 0.9,
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: Colors.blue,
-                child: SizedBox(
-                  width: witdh * 0.2,
-                  height: witdh * 0.3,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: _utils.oneImage(
+                    '${Provider.of<DiseaseProvider>(context, listen: false).fruit.dbName}/${nomeDoenca['doenca']}',
+                    width: witdh * 0.2,
+                    height: witdh * 0.2),
+              ),
+              Container(
+                width: witdh * 0.7,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                        alignment: Alignment.bottomLeft,
+                        child: _utils.simpleText(
+                          nomeDoenca['doenca'],
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        )),
+                    _catacterisitica(doenca: nomeDoenca['doenca'])
+                    //_utils.simpleText('A doenca x é causada por y, resultando em z', fontSize: 16)
+                  ],
                 ),
               ),
-            ),
-            Container(
-              width: witdh * 0.7,
-              child: Column(
-                children: [
-                  Container(
-                      alignment: Alignment.bottomLeft,
-                      child: _utils.simpleText(
-                        nomeDoenca['doenca'],
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      )),
-                  _catacterisitica(doenca: nomeDoenca['doenca'])
-                  //_utils.simpleText('A doenca x é causada por y, resultando em z', fontSize: 16)
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
