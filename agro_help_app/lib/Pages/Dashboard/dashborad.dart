@@ -176,7 +176,7 @@ class DashBoard extends StatelessWidget {
                 ),
               ),
             ),
-            _utils.simpleText(name, fontSize: 18, fontWeight: FontWeight.bold)
+            _utils.simpleText(name, fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)
           ],
         ),
         elevation: 8,

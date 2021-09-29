@@ -41,7 +41,7 @@ class SubmitImage extends StatelessWidget {
               ),
             ),
             _listdDeseas(context),
-            StreamBuilder(
+            /*       StreamBuilder(
               stream: FirebaseFirestore.instance.collection("Apple_CedarAppleRust").snapshots(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasError) {
@@ -72,7 +72,7 @@ class SubmitImage extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                 );
               },
-            ),
+            ),*/
           ],
         ),
       ),
@@ -111,7 +111,7 @@ class SubmitImage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: _utils.oneImage(
-                    '${Provider.of<DiseaseProvider>(context, listen: false).fruit.dbName}/${nomeDoenca['doenca']}',
+                    'files/${Provider.of<DiseaseProvider>(context, listen: false).fruit.dbName}/${nomeDoenca['doenca']}/',
                     width: witdh * 0.2,
                     height: witdh * 0.2),
               ),
