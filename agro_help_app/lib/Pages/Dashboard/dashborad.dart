@@ -2,6 +2,7 @@ import 'package:agro_help_app/Pages/Disease/List/listDesease.dart';
 import 'package:agro_help_app/api/firebase_api.dart';
 import 'package:agro_help_app/model/firebase_file.dart';
 import 'package:agro_help_app/povider/diseaseProvider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../utils.dart';
@@ -27,47 +28,8 @@ class DashBoard extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 190, child: _imagensDashboard(context)),
-            /*        FutureBuilder<List<FirebaseFile>>(
-              future: futureFiles,
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return Center(child: CircularProgressIndicator());
-
-                  default:
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: _utils.simpleText('Error to load image'),
-                      );
-                    }
-                    final files = snapshot.data!;
-
-                    return ListView.builder(
-                      itemCount: files.length,
-                      shrinkWrap: true, ///////////////////////Use This Line
-
-                      itemBuilder: (context, index) {
-                        final file = files[index];
-                        return buildFile(context, file);
-                      },
-                    );
-                }
-              },
-            ),*/
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                child: Container(
-                  height: height / 2.5,
-                  width: width - 50,
-                  //       color: Colors.amber.shade100,
-                  child: Center(
-                    child: _utils.simpleText('Widget de Clima', fontSize: 32, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
+            _newsDashboard(),
+            /*Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
                 child: Container(
@@ -79,10 +41,71 @@ class DashBoard extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ),
+    );
+  }
+
+  Widget _newsDashboard() {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection('News').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return CircularProgressIndicator();
+          case ConnectionState.active:
+            if (snapshot.hasData) {
+              try {
+                final docs = snapshot.data!.docs;
+
+                return ListView.builder(
+                    itemCount: docs.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (_, i) {
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                        child: Card(child: _utils.newsCart(docs[i])),
+                      );
+                    });
+              } catch (e) {
+                return Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Card(
+                    child: _utils.simpleText(
+                      'Erro ao carregar dados, verifique sua conexção com a internet! 1',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                );
+              }
+            }
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+              child: Card(
+                child: _utils.simpleText(
+                  'Erro ao carregar dados, verifique sua conexção com a internet! 2',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            );
+          default:
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+              child: Card(
+                child: _utils.simpleText(
+                  'Erro ao carregar dados, verifique sua conexção com a internet! 3',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            );
+        }
+      },
     );
   }
 

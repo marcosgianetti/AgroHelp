@@ -13,6 +13,7 @@ class Fruit {
 
 class Disease {
   String name = '';
+  String namePT = '';
   String caracteristc = '';
   String treatement = '';
   String prevention = '';

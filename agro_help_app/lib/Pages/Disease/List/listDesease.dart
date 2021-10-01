@@ -101,43 +101,47 @@ class SubmitImage extends StatelessWidget {
   }
 
   Widget _doencaCard(BuildContext context, {dynamic nomeDoenca}) {
-    return Card(
-      child: Container(
-        width: witdh * 0.9,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: _utils.oneImage(
-                    'files/${Provider.of<DiseaseProvider>(context, listen: false).fruit.dbName}/${nomeDoenca['doenca']}/',
-                    width: witdh * 0.2,
-                    height: witdh * 0.2),
-              ),
-              Container(
-                width: witdh * 0.7,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                        alignment: Alignment.bottomLeft,
-                        child: _utils.simpleText(
-                          nomeDoenca['doenca'],
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        )),
-                    _catacterisitica(doenca: nomeDoenca['doenca'])
-                    //_utils.simpleText('A doenca x é causada por y, resultando em z', fontSize: 16)
-                  ],
+    try {
+      return Card(
+        child: Container(
+          width: witdh * 0.9,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _utils.oneImage(
+                      'files/${Provider.of<DiseaseProvider>(context, listen: false).fruit.dbName}/${nomeDoenca['doenca']}/',
+                      width: witdh * 0.2,
+                      height: witdh * 0.2),
                 ),
-              ),
-            ],
+                Container(
+                  width: witdh * 0.7,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                          alignment: Alignment.bottomLeft,
+                          child: _utils.simpleText(
+                            nomeDoenca['doencaPT'] ?? 'Dado nao definido',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          )),
+                      _catacterisitica(doenca: nomeDoenca)
+                      //_utils.simpleText('A doenca x é causada por y, resultando em z', fontSize: 16)
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    } catch (_) {
+      return Container();
+    }
   }
 
   Widget _listdDeseas(BuildContext context) {
@@ -187,9 +191,9 @@ class SubmitImage extends StatelessWidget {
     }
   }
 
-  Widget _catacterisitica({String? doenca}) {
+  Widget _catacterisitica({dynamic? doenca}) {
     return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection(doenca!).snapshots(),
+      stream: FirebaseFirestore.instance.collection(doenca['doenca']!).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
@@ -199,7 +203,8 @@ class SubmitImage extends StatelessWidget {
               try {
                 final docs = snapshot.data!.docs;
                 Disease disease = new Disease();
-                disease.name = doenca;
+                disease.name = doenca['doenca'];
+                disease.namePT = doenca['doencaPT'] ?? 'Dados não definidos';
                 disease.caracteristc = docs[0].data()['caracteristica'] ?? 'Dados não definidos';
                 disease.treatement = docs[0].data()['combate'] ?? 'Dados não definidos';
                 disease.prevention = docs[0].data()['evitar'] ?? 'Dados não definidos';

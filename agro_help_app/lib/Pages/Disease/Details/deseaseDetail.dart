@@ -46,9 +46,7 @@ class _DeseaseDetailState extends State<DeseaseDetail> {
           children: [
             Container(
               height: height / 3,
-              child: //Container(child: _utils.onhjkaseImage(Provider.of<DiseaseProvider>(context, listen: false).url)
-
-                  Observer(
+              child: Observer(
                 builder: (_) {
                   return _controller.images.length > 0
                       ? CarouselSlider(
@@ -66,7 +64,7 @@ class _DeseaseDetailState extends State<DeseaseDetail> {
             new Center(
               child: Column(
                 children: [
-                  _utils.simpleText('${_disease.name}', fontSize: 24, fontWeight: FontWeight.w500),
+                  _utils.simpleText('${_disease.namePT}', fontSize: 24, fontWeight: FontWeight.w500),
                   Visibility(
                     visible: _disease.score > 0.0,
                     child: Padding(

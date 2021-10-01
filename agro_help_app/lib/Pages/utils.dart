@@ -48,12 +48,21 @@ class Utils {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return Center(child: CircularProgressIndicator());
+            return Container(width: width, height: height, child: Center(child: CircularProgressIndicator()));
 
           default:
             if (snapshot.hasError) {
-              return Center(
-                child: simpleText('Error to load image'),
+              return ClipOval(
+                child: Image.network(
+                  '',
+                  width: width,
+                  height: height,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, url, error) => Icon(
+                    Icons.no_photography_outlined,
+                    size: width,
+                  ),
+                ),
               );
             }
             final files = snapshot.data!;
@@ -70,21 +79,6 @@ class Utils {
                 ),
               ),
             );
-          /*
-            return ListView.builder(
-              itemCount: files.length,
-              shrinkWrap: true, ///////////////////////Use This Line
-
-              itemBuilder: (context, index) {
-                final file = files[index];
-                return Image.network(
-                  file.url,
-                  width: 52,
-                  height: 52,
-                  fit: BoxFit.cover,
-                );
-              },
-            );*/
         }
       },
     );
@@ -127,6 +121,39 @@ class Utils {
       );
       return saida;
     }
+  }
+
+  Widget newsCart(dynamic docs) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          docs.data()['Title'] != null
+              ? Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 4, 0, 8),
+                  child: simpleText('${docs['Title'].toString().replaceAll('\\\\n', '\n')}',
+                      fontSize: 32, fontWeight: FontWeight.bold),
+                )
+              : Container(),
+          docs.data()['Subtitle'] != null
+              ? Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 4, 0, 8),
+                  child: simpleText('${docs['Subtitle'].toString().replaceAll('\\\\n', '\n')}',
+                      fontSize: 24, fontWeight: FontWeight.w500),
+                )
+              : Container(),
+          docs.data()['Body'] != null
+              ? Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                  child: simpleText('${docs['Body'].toString().replaceAll('\\\\n', '\n')}',
+                      fontSize: 16, fontWeight: FontWeight.w400),
+                )
+              : Container(),
+        ],
+      ),
+    );
   }
 
   error(BuildContext context) {
