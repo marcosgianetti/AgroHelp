@@ -9,7 +9,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Utils {
   Widget simpleText(String str, {double? fontSize = 12, Color? color, FontWeight? fontWeight = FontWeight.normal}) {
-    return Text(str, style: GoogleFonts.montserrat(fontSize: fontSize, fontWeight: fontWeight, color: color));
+    return Text(
+      str.replaceAll('\\\\n', '\n'),
+      style: GoogleFonts.montserrat(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        color: color,
+      ),
+    );
   }
 
   Future<void> showLoadingDialog(BuildContext context, {String text = "Please Wait...."}) async {
@@ -133,22 +140,19 @@ class Utils {
           docs.data()['Title'] != null
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(0, 4, 0, 8),
-                  child: simpleText('${docs['Title'].toString().replaceAll('\\\\n', '\n')}',
-                      fontSize: 32, fontWeight: FontWeight.bold),
+                  child: simpleText('${docs['Title']}', fontSize: 32, fontWeight: FontWeight.bold),
                 )
               : Container(),
           docs.data()['Subtitle'] != null
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(0, 4, 0, 8),
-                  child: simpleText('${docs['Subtitle'].toString().replaceAll('\\\\n', '\n')}',
-                      fontSize: 24, fontWeight: FontWeight.w500),
+                  child: simpleText('${docs['Subtitle']}', fontSize: 24, fontWeight: FontWeight.w500),
                 )
               : Container(),
           docs.data()['Body'] != null
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                  child: simpleText('${docs['Body'].toString().replaceAll('\\\\n', '\n')}',
-                      fontSize: 16, fontWeight: FontWeight.w400),
+                  child: simpleText('${docs['Body']}', fontSize: 16, fontWeight: FontWeight.w400),
                 )
               : Container(),
         ],
@@ -165,6 +169,19 @@ class Utils {
       desc: 'Dialog description here.............',
       btnCancelOnPress: () {},
       btnOkOnPress: () {},
+    )..show();
+  }
+
+  alert(BuildContext context, {String? title, String? desc}) {
+    return AwesomeDialog(
+      context: context,
+      dialogType: DialogType.WARNING,
+      animType: AnimType.BOTTOMSLIDE,
+      title: title,
+      desc: desc,
+      btnOkOnPress: () {
+        //    Navigator.pop(context);
+      },
     )..show();
   }
 }

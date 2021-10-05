@@ -24,6 +24,21 @@ mixin _$ControllerDeails on _ControllerDetailsBase, Store {
     });
   }
 
+  final _$_alertAtom = Atom(name: '_ControllerDetailsBase._alert');
+
+  @override
+  bool get _alert {
+    _$_alertAtom.reportRead();
+    return super._alert;
+  }
+
+  @override
+  set _alert(bool value) {
+    _$_alertAtom.reportWrite(value, super._alert, () {
+      super._alert = value;
+    });
+  }
+
   final _$loadImagesAsyncAction =
       AsyncAction('_ControllerDetailsBase.loadImages');
 

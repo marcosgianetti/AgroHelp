@@ -12,11 +12,16 @@ abstract class _ControllerDetailsBase with Store {
   Utils _utils = new Utils();
   @observable
   List<Widget> _images = <Widget>[];
-
+  @observable
+  bool _alert = true;
   List<Widget> get images => _images;
 
   @action
   loadImages(BuildContext context, {double? height, double? width}) async {
+    /*Future.delayed(Duration.zero, () async {
+      checkScore(context, score! * 100);
+    });*/
+
     this._images = await _utils.manyImages(Provider.of<DiseaseProvider>(context, listen: false).url,
         width: width!, height: height!);
   }
@@ -24,5 +29,15 @@ abstract class _ControllerDetailsBase with Store {
   @action
   cleanImages() {
     this._images = <Widget>[];
+  }
+
+  checkScore(BuildContext context, double score) {
+    if (score == 0)
+      return;
+    else if (score < 90)
+      _utils.alert(context,
+          title: 'ALERTA\nResultado não preciso: ${score.toStringAsFixed(2)}%',
+          desc:
+              'Para a foto enviada, houve uma previsão de apenas: ${score.toStringAsFixed(2)}%.\nRecomendamos sempre a consulta extra com um profissional especializado');
   }
 }

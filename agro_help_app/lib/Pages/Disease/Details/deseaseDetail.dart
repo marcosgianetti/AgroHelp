@@ -12,28 +12,38 @@ import 'controllerDetails.dart';
 Utils _utils = new Utils();
 ControllerDeails _controller = ControllerDeails();
 
-class DeseaseDetail extends StatefulWidget {
-  const DeseaseDetail({Key? key}) : super(key: key);
+class DeseaseDetail extends StatelessWidget {
+  double _width = 0.0;
+  double _height = 0.0;
+  Fruit _fruit = new Fruit();
+  Disease _disease = new Disease();
+/*
+  @override
+  initState() {
+    print('Init State');
+    super.initState();
+    //   _controller.checkScore(context, Provider.of<DiseaseProvider>(context, listen: false).selectedDesease.score);
+  }
 
   @override
-  _DeseaseDetailState createState() => _DeseaseDetailState();
-}
+  void dispose() {
+    super.dispose();
+    _controller.cleanImages();
+  }*/
 
-class _DeseaseDetailState extends State<DeseaseDetail> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    Fruit _fruit = Provider.of<DiseaseProvider>(context, listen: false).fruit;
-    Disease _disease = Provider.of<DiseaseProvider>(context, listen: false).selectedDesease;
+    _width = MediaQuery.of(context).size.width;
+    _height = MediaQuery.of(context).size.height;
+    _fruit = Provider.of<DiseaseProvider>(context, listen: false).fruit;
+    _disease = Provider.of<DiseaseProvider>(context, listen: false).selectedDesease;
 
-    _controller.loadImages(context, width: height / 3, height: height / 3);
-    @override
-    void dispose() {
-      super.dispose();
-      _controller.cleanImages();
-    }
+    _controller.loadImages(context, width: _height / 3, height: _height / 3);
+    Future.delayed(Duration.zero, () async {
+      _controller.checkScore(context, _disease.score * 100);
+    });
 
+    //_controller.checkScore(context, _disease.score);
     return Scaffold(
       appBar: new AppBar(
         title: Center(
@@ -45,7 +55,7 @@ class _DeseaseDetailState extends State<DeseaseDetail> {
         child: Column(
           children: [
             Container(
-              height: height / 3,
+              height: _height / 3,
               child: Observer(
                 builder: (_) {
                   return _controller.images.length > 0
@@ -71,14 +81,15 @@ class _DeseaseDetailState extends State<DeseaseDetail> {
                       padding: const EdgeInsets.all(8.0),
                       child: _utils.simpleText(
                           'Taxa de confiabilidade: ${(_disease.score * 100).toString().split('.')[0]}%',
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400),
+                          fontSize: _disease.score < 0.9 ? 24 : 18,
+                          color: _disease.score < 0.9 ? Colors.red : null,
+                          fontWeight: _disease.score < 0.9 ? FontWeight.w800 : FontWeight.w400),
                     ),
                   ),
                   Card(
                     child: SizedBox(
-                      height: height / 4,
-                      width: width - 50,
+                      height: _height / 4,
+                      width: _width - 50,
                       child: Stack(
                         children: [
                           Align(
@@ -95,8 +106,8 @@ class _DeseaseDetailState extends State<DeseaseDetail> {
                   ),
                   Card(
                     child: SizedBox(
-                      height: height / 4,
-                      width: width - 50,
+                      height: _height / 4,
+                      width: _width - 50,
                       child: Stack(
                         children: [
                           Align(
@@ -113,8 +124,8 @@ class _DeseaseDetailState extends State<DeseaseDetail> {
                   ),
                   Card(
                     child: SizedBox(
-                      height: height / 4,
-                      width: width - 50,
+                      height: _height / 4,
+                      width: _width - 50,
                       child: Stack(
                         children: [
                           Align(
