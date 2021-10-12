@@ -17,5 +17,6 @@ class Disease {
   String caracteristc = '';
   String treatement = '';
   String prevention = '';
+  String font = '';
   double score = 0.0;
 }

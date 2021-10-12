@@ -103,8 +103,8 @@ class SubmitImage extends StatelessWidget {
   Widget _doencaCard(BuildContext context, {dynamic nomeDoenca}) {
     try {
       return Card(
-        child: Container(
-          width: witdh * 0.9,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -124,10 +124,11 @@ class SubmitImage extends StatelessWidget {
                     children: [
                       Container(
                           alignment: Alignment.bottomLeft,
-                          child: _utils.simpleText(
+                          child: _utils.simpleTextSelectable(
                             nomeDoenca['doencaPT'] ?? 'Dado nao definido',
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
+                            textAlign: TextAlign.start,
                           )),
                       _catacterisitica(doenca: nomeDoenca)
                       //_utils.simpleText('A doenca x é causada por y, resultando em z', fontSize: 16)
@@ -205,9 +206,11 @@ class SubmitImage extends StatelessWidget {
                 Disease disease = new Disease();
                 disease.name = doenca['doenca'];
                 disease.namePT = doenca['doencaPT'] ?? 'Dados não definidos';
-                disease.caracteristc = docs[0].data()['caracteristica'] ?? 'Dados não definidos';
-                disease.treatement = docs[0].data()['combate'] ?? 'Dados não definidos';
-                disease.prevention = docs[0].data()['evitar'] ?? 'Dados não definidos';
+                disease.caracteristc = docs[0].data()['caracteristica'] ?? '';
+                disease.treatement = docs[0].data()['combate'] ?? '';
+                disease.prevention = docs[0].data()['evitar'] ?? '';
+                disease.font = docs[0].data()['fonte'] ?? '';
+
                 Provider.of<DiseaseProvider>(context, listen: false).fruit.desease.add(disease);
 
                 return GestureDetector(
@@ -215,27 +218,9 @@ class SubmitImage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                        child: _utils.simpleText(
-                          'Caracteristica: ' + '${disease.caracteristc}',
-                          fontSize: 16,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                        child: _utils.simpleText(
-                          'Combate: ' + '${disease.treatement}',
-                          fontSize: 14,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                        child: _utils.simpleText(
-                          'Prevenção: ' + '${disease.prevention}',
-                          fontSize: 14,
-                        ),
-                      ),
+                      _text('Caracteristica: ', disease.caracteristc),
+                      _text('Combate: ', disease.treatement),
+                      _text('Prevenção: ', disease.prevention),
                     ],
                   ),
                   onTap: () {
@@ -273,6 +258,16 @@ class SubmitImage extends StatelessWidget {
             );
         }
       },
+    );
+  }
+
+  Widget _text(String str1, String str2) {
+    return Visibility(
+      visible: str2 != '',
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+        child: _utils.simpleText(str1 + str2.substring(0, str2.length < 20 ? str2.length : 20) + '...', fontSize: 14),
+      ),
     );
   }
 

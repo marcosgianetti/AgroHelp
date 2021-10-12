@@ -74,7 +74,11 @@ class DeseaseDetail extends StatelessWidget {
             new Center(
               child: Column(
                 children: [
-                  _utils.simpleText('${_disease.namePT}', fontSize: 24, fontWeight: FontWeight.w500),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: _utils.simpleTextSelectable('${_disease.namePT}',
+                        fontSize: 24, fontWeight: FontWeight.w500, textAlign: TextAlign.center),
+                  ),
                   Visibility(
                     visible: _disease.score > 0.0,
                     child: Padding(
@@ -86,68 +90,40 @@ class DeseaseDetail extends StatelessWidget {
                           fontWeight: _disease.score < 0.9 ? FontWeight.w800 : FontWeight.w400),
                     ),
                   ),
-                  Card(
-                    child: SizedBox(
-                      height: _height / 4,
-                      width: _width - 50,
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: _utils.simpleText('Caracteristica: ', fontSize: 16, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Center(child: _utils.simpleText(_disease.caracteristc, fontSize: 16)),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Card(
-                    child: SizedBox(
-                      height: _height / 4,
-                      width: _width - 50,
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: _utils.simpleText('Prevenção: ', fontSize: 16, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Center(child: _utils.simpleText('Prevenção: ' + _disease.prevention, fontSize: 16)),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Card(
-                    child: SizedBox(
-                      height: _height / 4,
-                      width: _width - 50,
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: _utils.simpleText('Tratamento: ', fontSize: 16, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Center(
-                              child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _utils.simpleText('Tratamento: ' + _disease.treatement, fontSize: 16),
-                          )),
-                        ],
-                      ),
-                    ),
-                  ),
+                  _card('Caracteristica: ', _disease.caracteristc),
+                  _card('Prevenção: ', _disease.prevention),
+                  _card('Tratamento: ', _disease.treatement),
+                  _card('Fonte: ', _disease.font),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _card(String title, String str) {
+    return Visibility(
+      visible: str != '',
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _utils.simpleTextSelectable(title, fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(child: _utils.simpleTextSelectable(str, fontSize: 16)),
+              ),
+            ],
+          ),
         ),
       ),
     );

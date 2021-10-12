@@ -19,6 +19,27 @@ class Utils {
     );
   }
 
+  Widget simpleTextSelectable(
+    String str, {
+    double? fontSize = 12,
+    Color? color,
+    FontWeight? fontWeight = FontWeight.normal,
+    TextAlign textAlign = TextAlign.justify,
+  }) {
+    return SelectableText(
+      str.replaceAll('\\\\n', '\n'),
+      // showCursor: true,
+      cursorWidth: 5,
+      textAlign: textAlign,
+      cursorRadius: Radius.circular(5),
+      style: GoogleFonts.montserrat(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        color: color,
+      ),
+    );
+  }
+
   Future<void> showLoadingDialog(BuildContext context, {String text = "Please Wait...."}) async {
     return showDialog<void>(
         context: context,
@@ -134,25 +155,27 @@ class Utils {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
+        //   crossAxisAlignment: CrossAxisAlignment.center,
+        //  mainAxisAlignment: MainAxisAlignment.center,
         children: [
           docs.data()['Title'] != null
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(0, 4, 0, 8),
-                  child: simpleText('${docs['Title']}', fontSize: 32, fontWeight: FontWeight.bold),
+                  child: simpleTextSelectable('${docs['Title']}',
+                      fontSize: 32, textAlign: TextAlign.center, fontWeight: FontWeight.bold),
                 )
               : Container(),
           docs.data()['Subtitle'] != null
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(0, 4, 0, 8),
-                  child: simpleText('${docs['Subtitle']}', fontSize: 24, fontWeight: FontWeight.w500),
+                  child: simpleTextSelectable('${docs['Subtitle']}',
+                      textAlign: TextAlign.start, fontSize: 24, fontWeight: FontWeight.w500),
                 )
               : Container(),
           docs.data()['Body'] != null
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                  child: simpleText('${docs['Body']}', fontSize: 16, fontWeight: FontWeight.w400),
+                  child: simpleTextSelectable('${docs['Body']}', fontSize: 16, fontWeight: FontWeight.w400),
                 )
               : Container(),
         ],

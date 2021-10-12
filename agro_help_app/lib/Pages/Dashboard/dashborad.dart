@@ -29,19 +29,6 @@ class DashBoard extends StatelessWidget {
           children: [
             SizedBox(height: 190, child: _imagensDashboard(context)),
             _newsDashboard(),
-            /*Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                child: Container(
-                  height: height / 2.5,
-                  width: width - 50,
-                  //        color: Colors.amber.shade100,
-                  child: Center(
-                    child: _utils.simpleText('Widget de Notícias', fontSize: 32, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),*/
           ],
         ),
       ),
