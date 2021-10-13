@@ -17,19 +17,6 @@ class DeseaseDetail extends StatelessWidget {
   double _height = 0.0;
   Fruit _fruit = new Fruit();
   Disease _disease = new Disease();
-/*
-  @override
-  initState() {
-    print('Init State');
-    super.initState();
-    //   _controller.checkScore(context, Provider.of<DiseaseProvider>(context, listen: false).selectedDesease.score);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.cleanImages();
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +30,6 @@ class DeseaseDetail extends StatelessWidget {
       _controller.checkScore(context, _disease.score * 100);
     });
 
-    //_controller.checkScore(context, _disease.score);
     return Scaffold(
       appBar: new AppBar(
         title: Center(
@@ -71,31 +57,30 @@ class DeseaseDetail extends StatelessWidget {
                 },
               ),
             ),
-            new Center(
-              child: Column(
-                children: [
-                  Padding(
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _utils.simpleTextSelectable('${_disease.namePT}',
+                      fontSize: 24, fontWeight: FontWeight.w500, textAlign: TextAlign.center),
+                ),
+                Visibility(
+                  visible: _disease.score > 0.0,
+                  child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: _utils.simpleTextSelectable('${_disease.namePT}',
-                        fontSize: 24, fontWeight: FontWeight.w500, textAlign: TextAlign.center),
+                    child: _utils.simpleText(
+                        'Taxa de confiabilidade: ${(_disease.score * 100).toString().split('.')[0]}%',
+                        fontSize: 24,
+                        color: _disease.score < 0.9 ? Colors.red : null,
+                        fontWeight: _disease.score < 0.9 ? FontWeight.w800 : FontWeight.w400),
                   ),
-                  Visibility(
-                    visible: _disease.score > 0.0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: _utils.simpleText(
-                          'Taxa de confiabilidade: ${(_disease.score * 100).toString().split('.')[0]}%',
-                          fontSize: _disease.score < 0.9 ? 24 : 18,
-                          color: _disease.score < 0.9 ? Colors.red : null,
-                          fontWeight: _disease.score < 0.9 ? FontWeight.w800 : FontWeight.w400),
-                    ),
-                  ),
-                  _card('Caracteristica: ', _disease.caracteristc),
-                  _card('Prevenção: ', _disease.prevention),
-                  _card('Tratamento: ', _disease.treatement),
-                  _card('Fonte: ', _disease.font),
-                ],
-              ),
+                ),
+                _card('Caracteristica', _disease.caracteristc),
+                _card('Prevenção', _disease.prevention),
+                _card('Tratamento', _disease.treatement),
+                _card('Fonte', _disease.font),
+                SizedBox(height: 32),
+              ],
             ),
           ],
         ),
@@ -111,12 +96,10 @@ class DeseaseDetail extends StatelessWidget {
         child: Card(
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _utils.simpleTextSelectable(title, fontSize: 16, fontWeight: FontWeight.w500),
-                ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: _utils.simpleTextSelectable(title,
+                    fontSize: 20, textAlign: TextAlign.center, fontWeight: FontWeight.w500),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

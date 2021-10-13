@@ -16,7 +16,6 @@ class GoogleSingUp extends StatelessWidget {
       backgroundColor: Colors.grey.shade900,
       body: Center(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/img/logo.png',
                 width: MediaQuery.of(context).size.width / 2, height: MediaQuery.of(context).size.height / 2),
@@ -29,10 +28,7 @@ class GoogleSingUp extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                      //             primary: Colors.white,
-                      //           onPrimary: Colors.black,
-                      minimumSize: Size(MediaQuery.of(context).size.width - 80, 50)),
+                  style: ElevatedButton.styleFrom(minimumSize: Size(MediaQuery.of(context).size.width - 80, 50)),
                   onPressed: () {
                     final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
                     provider.googleLogin();

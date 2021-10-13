@@ -42,31 +42,4 @@ class MyApp extends StatelessWidget {
       home: Splash(),
     );
   }
-/*
-  Widget _splashScrean() {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          //  mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/img/logo.png',
-              width: 250,
-              height: 250,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _utils.simpleText(
-                'AGRO HELP',
-                fontSize: 40,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }*/
 }

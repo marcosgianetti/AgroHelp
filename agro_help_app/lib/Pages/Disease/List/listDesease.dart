@@ -40,38 +40,9 @@ class SubmitImage extends StatelessWidget {
               ),
             ),
             _listdDeseas(context),
-            /*       StreamBuilder(
-              stream: FirebaseFirestore.instance.collection("Apple_CedarAppleRust").snapshots(),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error ' + snapshot.error.toString());
-                } else if (snapshot.hasData) {
-                  final docs = snapshot.data!.docs;
-
-                  return ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: docs.length,
-                    itemBuilder: (_, i) {
-                      //final data = docs[i].data();
-                      return ListTile(
-                        title: Text(docs[i]['caracteristica']),
-                        subtitle: Text(docs[i]['combate'] + '\n' + docs[i]['evitar']),
-                      );
-                    },
-                  );
-                }
-                return LinearProgressIndicator();
-              },
+            SizedBox(
+              height: 32,
             ),
-            Observer(
-              builder: (_) {
-                return Text(
-                  controller.category != null ? 'Confidence: ${controller.category!.score.toStringAsFixed(3)}' : '',
-                  style: TextStyle(fontSize: 16),
-                );
-              },
-            ),*/
           ],
         ),
       ),
@@ -130,7 +101,6 @@ class SubmitImage extends StatelessWidget {
                             textAlign: TextAlign.start,
                           )),
                       _catacterisitica(doenca: nomeDoenca)
-                      //_utils.simpleText('A doenca x é causada por y, resultando em z', fontSize: 16)
                     ],
                   ),
                 ),
@@ -145,8 +115,6 @@ class SubmitImage extends StatelessWidget {
   }
 
   Widget _listdDeseas(BuildContext context) {
-//    Map<int, String> plantsList = {0: 'Apple', 1: 'Corn', 2: 'Grape', 3: 'Tomato'};
-
     try {
       return StreamBuilder(
         stream: FirebaseFirestore.instance

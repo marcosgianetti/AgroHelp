@@ -12,7 +12,6 @@ import '../utils.dart';
 Utils _utils = new Utils();
 
 class DashBoard extends StatelessWidget {
-  //const DashBoard({Key? key}) : super(key: key);
   late Future<List<FirebaseFile>> futureFiles;
 
   @override
@@ -47,10 +46,7 @@ class DashBoard extends StatelessWidget {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(
-              //   primary: Colors.white,
-              //   onPrimary: Colors.black,
-              minimumSize: Size(MediaQuery.of(context).size.width - 80, 50)),
+          style: ElevatedButton.styleFrom(minimumSize: Size(MediaQuery.of(context).size.width - 80, 50)),
           onPressed: () {
             Provider.of<GoogleSignInProvider>(context, listen: false).googleLogout();
           },
@@ -58,7 +54,7 @@ class DashBoard extends StatelessWidget {
             FontAwesomeIcons.google,
             color: Colors.red,
           ),
-          label: _utils.simpleText('login out Google', fontSize: 24, fontWeight: FontWeight.bold),
+          label: _utils.simpleText('Logout Google', fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
     );
