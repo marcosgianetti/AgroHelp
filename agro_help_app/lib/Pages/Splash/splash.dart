@@ -1,4 +1,4 @@
-import 'package:agro_help_app/Pages/Dashboard/dashborad.dart';
+import 'package:agro_help_app/Pages/Login/login_home.dart';
 import 'package:agro_help_app/Pages/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class _SplashState extends State<Splash> {
 
   _navigateToDashBoard() async {
     await Future.delayed(Duration(milliseconds: 1600), () {});
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashBoard()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginHome(context)));
   }
 
   @override

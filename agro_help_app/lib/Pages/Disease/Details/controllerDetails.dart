@@ -1,5 +1,5 @@
 import 'package:agro_help_app/Pages/utils.dart';
-import 'package:agro_help_app/povider/diseaseProvider.dart';
+import 'package:agro_help_app/provider/diseaseProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';

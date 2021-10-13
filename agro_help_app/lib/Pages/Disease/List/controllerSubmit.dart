@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:agro_help_app/ML/classifier.dart';
 import 'package:agro_help_app/ML/classifier_quant.dart';
 import 'package:agro_help_app/Pages/Disease/Details/deseaseDetail.dart';
-import 'package:agro_help_app/povider/diseaseProvider.dart';
+import 'package:agro_help_app/provider/diseaseProvider.dart';
 import 'package:agro_help_app/utils/doenca.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;

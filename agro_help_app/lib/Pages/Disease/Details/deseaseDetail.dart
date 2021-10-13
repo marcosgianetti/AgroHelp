@@ -1,4 +1,4 @@
-import 'package:agro_help_app/povider/diseaseProvider.dart';
+import 'package:agro_help_app/provider/diseaseProvider.dart';
 import 'package:agro_help_app/utils/doenca.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

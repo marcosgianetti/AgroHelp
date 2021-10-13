@@ -1,9 +1,8 @@
 import 'package:agro_help_app/Pages/Disease/Details/deseaseDetail.dart';
 import 'package:agro_help_app/Pages/utils.dart';
-import 'package:agro_help_app/povider/diseaseProvider.dart';
+import 'package:agro_help_app/provider/diseaseProvider.dart';
 import 'package:agro_help_app/utils/doenca.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:provider/provider.dart';

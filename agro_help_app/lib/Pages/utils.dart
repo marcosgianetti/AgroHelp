@@ -175,7 +175,8 @@ class Utils {
           docs.data()['Body'] != null
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                  child: simpleTextSelectable('${docs['Body']}', fontSize: 16, fontWeight: FontWeight.w400),
+                  child: simpleTextSelectable('${docs['Body']}',
+                      textAlign: TextAlign.start, fontSize: 16, fontWeight: FontWeight.w400),
                 )
               : Container(),
         ],
