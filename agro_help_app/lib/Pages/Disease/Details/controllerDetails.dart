@@ -38,6 +38,6 @@ abstract class _ControllerDetailsBase with Store {
       _utils.alert(context,
           title: 'ALERTA\nResultado não preciso: ${score.toStringAsFixed(2)}%',
           desc:
-              'Para a foto enviada, houve uma previsão de apenas: ${score.toStringAsFixed(2)}%.\nRecomendamos sempre a consulta extra com um profissional especializado');
+              'Para a foto enviada, houve uma previsão de apenas: ${score.toStringAsFixed(2)}%.\nRecomendamos sempre realizar uma consulta extra com um profissional especializado.');
   }
 }

@@ -144,7 +144,7 @@ class DashBoard extends StatelessWidget {
             return InkWell(
               child: cardImage('assets/img/icons/apple.png', color: Colors.red.shade100, name: 'Maçã'),
               onTap: () {
-                fruit.fruit.changeName('Maça');
+                fruit.fruit.changeName('Maçã');
 
                 Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitImage(selected: 0)));
               },

@@ -8,7 +8,7 @@ class Fruit {
     dbName = _dbNameMap[this.name]!;
   }
 
-  Map<String, String> _dbNameMap = {'': '', 'Maça': 'Apple', 'Milho': 'Corn', 'Uva': 'Grape', 'Tomate': 'Tomato'};
+  Map<String, String> _dbNameMap = {'': '', 'Maçã': 'Apple', 'Milho': 'Corn', 'Uva': 'Grape', 'Tomate': 'Tomato'};
 }
 
 class Disease {

@@ -75,7 +75,7 @@ class DeseaseDetail extends StatelessWidget {
                         fontWeight: _disease.score < 0.9 ? FontWeight.w800 : FontWeight.w400),
                   ),
                 ),
-                _card('Caracteristica', _disease.caracteristc),
+                _card('Característica', _disease.caracteristc),
                 _card('Prevenção', _disease.prevention),
                 _card('Tratamento', _disease.treatement),
                 _card('Fonte', _disease.font),
