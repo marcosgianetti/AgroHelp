@@ -54,11 +54,12 @@ dependencies:
   path_provider: ^2.0.3
 
   #Google Sign In
-  firebase_auth: ^3.0.1
-  google_sign_in: ^5.0.3
+  firebase_auth: ^3.1.4
+  google_sign_in: ^5.0.5
 
   #Google Icon
   font_awesome_flutter: ^9.0.0
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -102,6 +103,7 @@ flutter:
       - assets/ml/grape/grape.txt
       - assets/ml/tomato/tomato.tflite
       - assets/ml/tomato/tomato.txt
+      - assets/img/store/shirt.png
       
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,11 +1,10 @@
 import 'package:agro_help_app/Pages/Disease/List/listDesease.dart';
+import 'package:agro_help_app/Pages/Drawer/dashboard_drawer.dart';
 import 'package:agro_help_app/api/firebase_api.dart';
 import 'package:agro_help_app/model/firebase_file.dart';
 import 'package:agro_help_app/provider/diseaseProvider.dart';
-import 'package:agro_help_app/provider/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../utils.dart';
 
@@ -18,8 +17,8 @@ class DashBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     futureFiles = FirebaseApi.listAll('files/');
 
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    //var height = MediaQuery.of(context).size.height;
+    //var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: _utils.simpleText("Agro Help", fontSize: 36, fontWeight: FontWeight.bold),
@@ -30,33 +29,14 @@ class DashBoard extends StatelessWidget {
           children: [
             SizedBox(height: 190, child: _imagensDashboard(context)),
             _newsDashboard(),
-            _buttonLoginOut(context),
+            //_buttonLoginOut(context),
             SizedBox(
               height: 32,
             )
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buttonLoginOut(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(minimumSize: Size(MediaQuery.of(context).size.width - 80, 50)),
-          onPressed: () {
-            Provider.of<GoogleSignInProvider>(context, listen: false).googleLogout();
-          },
-          icon: FaIcon(
-            FontAwesomeIcons.google,
-            color: Colors.red,
-          ),
-          label: _utils.simpleText('Logout Google', fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-      ),
+      drawer: HomeDrawer(),
     );
   }
 
@@ -201,14 +181,12 @@ class DashBoard extends StatelessWidget {
         color: color,
         child: Column(
           children: [
-            Container(
-              child: ListTile(
-                title: Image.asset(
-                  imageRoute,
-                  height: 120,
-                  width: 120,
-                  fit: BoxFit.fitWidth,
-                ),
+            ListTile(
+              title: Image.asset(
+                imageRoute,
+                height: 120,
+                width: 120,
+                fit: BoxFit.fitWidth,
               ),
             ),
             _utils.simpleText(name, fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)

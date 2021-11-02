@@ -5,15 +5,15 @@ import 'package:google_sign_in/google_sign_in.dart';
 class GoogleSignInProvider extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
 
-  GoogleSignInAccount ?_user;
+  GoogleSignInAccount? _userGoogle;
 
-  GoogleSignInAccount get user => _user!;
+  GoogleSignInAccount get user => _userGoogle!;
 
   Future googleLogin() async {
     final googleUser = await googleSignIn.signIn();
 
     if (googleUser == null) return null;
-    _user = googleUser;
+    _userGoogle = googleUser;
 
     final googleAuth = await googleUser.authentication;
 
@@ -27,8 +27,9 @@ class GoogleSignInProvider extends ChangeNotifier {
 
   Future googleLogout() async {
     try {
-      await googleSignIn.disconnect();
-      FirebaseAuth.instance.signOut();
+      await googleSignIn.disconnect().whenComplete(() async {
+        await FirebaseAuth.instance.signOut();
+      });
     } catch (e) {
       print('Logout error: ' + e.toString());
     }

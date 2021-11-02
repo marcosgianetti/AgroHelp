@@ -13,14 +13,12 @@ Utils _utils = new Utils();
 ControllerDeails _controller = ControllerDeails();
 
 class DeseaseDetail extends StatelessWidget {
-  double _width = 0.0;
   double _height = 0.0;
   Fruit _fruit = new Fruit();
   Disease _disease = new Disease();
 
   @override
   Widget build(BuildContext context) {
-    _width = MediaQuery.of(context).size.width;
     _height = MediaQuery.of(context).size.height;
     _fruit = Provider.of<DiseaseProvider>(context, listen: false).fruit;
     _disease = Provider.of<DiseaseProvider>(context, listen: false).selectedDesease;

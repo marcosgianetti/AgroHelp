@@ -121,9 +121,7 @@ class SubmitImage extends StatelessWidget {
             .collection(Provider.of<DiseaseProvider>(context, listen: false).fruit.dbName)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasError) {
-            return _utils.simpleText('Error ' + snapshot.error.toString());
-          }
+          if (snapshot.hasError) return _utils.simpleText('Error ' + snapshot.error.toString());
 
           switch (snapshot.connectionState) {
             case ConnectionState.none:

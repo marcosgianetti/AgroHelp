@@ -1,5 +1,4 @@
 import 'package:agro_help_app/Pages/Splash/splash.dart';
-import 'package:agro_help_app/Pages/utils.dart';
 import 'package:agro_help_app/provider/diseaseProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +19,6 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  Utils _utils = new Utils();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
