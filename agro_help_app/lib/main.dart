@@ -1,4 +1,5 @@
 import 'package:agro_help_app/Pages/Splash/splash.dart';
+import 'package:agro_help_app/Pages/utils.dart';
 import 'package:agro_help_app/provider/diseaseProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -6,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'provider/google_sign_in.dart';
 
+Utils _utils = Utils();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Agro Help',
+      title: _utils.name(),
       theme: ThemeData(
         buttonColor: Colors.purpleAccent,
         primaryColor: Colors.blueAccent.shade200,

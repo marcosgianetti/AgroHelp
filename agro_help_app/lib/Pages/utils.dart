@@ -8,13 +8,15 @@ import 'package:google_fonts/google_fonts.dart';
 //https://pub.dev/packages/awesome_dialog
 
 class Utils {
+  String name() => 'AGRO LIVE';
+
   Widget simpleText(String str, {double? fontSize = 12, Color? color, FontWeight? fontWeight = FontWeight.normal}) {
     return Text(
       str.replaceAll('\\\\n', '\n'),
       style: GoogleFonts.montserrat(
         fontSize: fontSize,
         fontWeight: fontWeight,
-        color: color,
+        color: color,]
       ),
     );
   }

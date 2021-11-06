@@ -21,7 +21,7 @@ class DashBoard extends StatelessWidget {
     //var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: _utils.simpleText("Agro Help", fontSize: 36, fontWeight: FontWeight.bold),
+        title: _utils.simpleText(_utils.name(), fontSize: 36, fontWeight: FontWeight.bold),
         actions: [Image.asset('assets/img/logo.png')],
       ),
       body: SingleChildScrollView(

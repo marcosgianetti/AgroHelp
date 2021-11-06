@@ -2,6 +2,8 @@ import 'package:agro_help_app/Pages/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 Utils _utils = new Utils();
 
@@ -97,7 +99,19 @@ class _StoreItenState extends State<StoreIten> {
               _utils.simpleText('Comprar', fontSize: 24, fontWeight: FontWeight.bold)
             ],
           ),
-          onPressed: () {},
+          onPressed: () async {
+            const url = 'https://www.mercadolivre.com.br/';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              Fluttertoast.showToast(
+                msg: "Erro ao fazer compra",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+              );
+            }
+          },
         ),
       ),
     );

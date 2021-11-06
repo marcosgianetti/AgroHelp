@@ -60,6 +60,9 @@ dependencies:
   #Google Icon
   font_awesome_flutter: ^9.0.0
   flutter_rating_bar: ^4.0.0
+  url_launcher: ^6.0.9
+  fluttertoast: ^8.0.8
+
 
 dev_dependencies:
   flutter_test:

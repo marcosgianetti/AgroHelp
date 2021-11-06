@@ -30,8 +30,6 @@ class _StoreAgroState extends State<StoreAgro> {
           _cardItem(context),
           _cardItem(context),
           _cardItem(context),
-          _cardItem(context),
-          _cardItem(context),
         ],
       ),
     );
@@ -54,14 +52,14 @@ class _StoreAgroState extends State<StoreAgro> {
                 Padding(
                     padding: const EdgeInsets.all(8.0), child: Image.asset('assets/img/store/shirt.png', height: 150)),
                 //PREÇO
-                _utils.simpleTextSelectable('R\$: 100,00', fontSize: 24, fontWeight: FontWeight.w600),
+                _utils.simpleText('R\$: 100,00', fontSize: 24, fontWeight: FontWeight.w600),
                 //DESCRIÇÃO
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                  child: _utils.simpleTextSelectable('Camisa Polo confortável e discreta',
-                      fontSize: 16, fontWeight: FontWeight.w600, textAlign: TextAlign.start),
+                  child: _utils.simpleText('Camisa Polo confortável e discreta',
+                      fontSize: 16, fontWeight: FontWeight.w600),
                 ),
-                _utils.simpleTextSelectable('Tamanho: P, M, G, GG', fontSize: 16, fontWeight: FontWeight.w700),
+                _utils.simpleText('Tamanho: P, M, G, GG', fontSize: 16, fontWeight: FontWeight.w700),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

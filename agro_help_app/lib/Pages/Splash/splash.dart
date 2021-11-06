@@ -32,7 +32,7 @@ class _SplashState extends State<Splash> {
           children: [
             Image.asset('assets/img/logo.png',
                 width: MediaQuery.of(context).size.width / 2, height: MediaQuery.of(context).size.height / 2),
-            _utils.simpleText('AGRO HELP', fontSize: 48, color: Colors.white, fontWeight: FontWeight.w900),
+            _utils.simpleText(_utils.name(), fontSize: 48, color: Colors.white, fontWeight: FontWeight.w900),
             Padding(
               padding: const EdgeInsets.only(top: 120),
               child: CircularProgressIndicator(),

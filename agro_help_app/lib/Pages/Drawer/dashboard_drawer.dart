@@ -27,7 +27,7 @@ class HomeDrawer extends StatelessWidget {
           children: [
             SizedBox(height: 50),
             Image.asset('assets/img/logo.png', width: MediaQuery.of(context).size.width / 2.5),
-            _utils.simpleText('Agro help', fontSize: 32, fontWeight: FontWeight.bold),
+            _utils.simpleText(_utils.name(), fontSize: 32, fontWeight: FontWeight.bold),
             SizedBox(height: 8),
             //_user(context),
             _buttonLoginOut(context, icon: Icon(Icons.dashboard), txt: 'Tela inicial', function: () {
