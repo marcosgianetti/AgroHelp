@@ -19,7 +19,8 @@ class HomeDrawer extends StatelessWidget {
   Widget _drawer(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        color: Colors.blue.shade400,
+        color:
+            MediaQuery.of(context).platformBrightness == Brightness.light ? Colors.blue.shade400 : Colors.grey.shade900,
         width: MediaQuery.of(context).size.width / 1.5,
         height: MediaQuery.of(context).size.height,
         child: Column(

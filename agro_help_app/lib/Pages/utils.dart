@@ -1,6 +1,7 @@
 import 'package:agro_help_app/api/firebase_api.dart';
 import 'package:agro_help_app/model/firebase_file.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 //https://pub.dev/packages/awesome_dialog
 
 class Utils {
-  String name() => 'AGRO LIVE';
+  String name() => 'Agro Help';
 
   Widget simpleText(String str, {double? fontSize = 12, Color? color, FontWeight? fontWeight = FontWeight.normal}) {
     return Text(
@@ -16,7 +17,7 @@ class Utils {
       style: GoogleFonts.montserrat(
         fontSize: fontSize,
         fontWeight: fontWeight,
-        color: color,]
+        color: color,
       ),
     );
   }
@@ -115,41 +116,46 @@ class Utils {
   }
 
   Future<List<Widget>> manyImages(String file, {double width = 52, double height = 52}) async {
-    late Future<List<FirebaseFile>> futureFiles = FirebaseApi.listAll(file);
-    print('url: ' + file);
-    final url = await futureFiles;
-    if (url.isEmpty) {
+    bool _hasConnection = await checkConnectivity();
+    if (!_hasConnection) {
       return <Widget>[
-        Image.network(
-          '',
+        Container(
           width: width,
           height: height,
-          fit: BoxFit.cover,
-          errorBuilder: (context, url, error) => Icon(
-            Icons.no_photography_outlined,
-            size: width,
-          ),
+          child: Icon(Icons.wifi_off, size: width),
         ),
       ];
     } else {
-      List<Widget> saida = <Widget>[];
-      url.forEach(
-        (element) {
-          saida.add(
-            Image.network(
-              element.url,
-              width: width,
-              height: height,
-              fit: BoxFit.cover,
-              errorBuilder: (context, url, error) => Icon(
-                Icons.no_photography_sharp,
-                size: width,
+      late Future<List<FirebaseFile>> futureFiles = FirebaseApi.listAll(file);
+      print('url: ' + file);
+      final url = await futureFiles;
+      if (url.isEmpty) {
+        return <Widget>[
+          Image.network(
+            '',
+            width: width,
+            height: height,
+            fit: BoxFit.cover,
+            errorBuilder: (context, url, error) => Icon(Icons.no_photography_outlined, size: width),
+          ),
+        ];
+      } else {
+        List<Widget> saida = <Widget>[];
+        url.forEach(
+          (element) {
+            saida.add(
+              Image.network(
+                element.url,
+                width: width,
+                height: height,
+                fit: BoxFit.cover,
+                errorBuilder: (context, url, error) => Icon(Icons.no_photography_outlined, size: width),
               ),
-            ),
-          );
-        },
-      );
-      return saida;
+            );
+          },
+        );
+        return saida;
+      }
     }
   }
 
@@ -209,5 +215,18 @@ class Utils {
         //    Navigator.pop(context);
       },
     )..show();
+  }
+
+  Future<bool> checkConnectivity() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      // I am connected to a mobile network.
+      return true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      return true;
+      // I am connected to a wifi network.
+    } else {
+      return false;
+    }
   }
 }

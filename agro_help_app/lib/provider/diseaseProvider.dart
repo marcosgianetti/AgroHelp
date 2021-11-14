@@ -11,6 +11,6 @@ class DiseaseProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get url => 'files/${this.fruit.dbName}/${this._selectedDesease.name}/';
+  String get urlImagensFruta => 'files/${this.fruit.dbName}/${this._selectedDesease.name}/';
   Disease get selectedDesease => this._selectedDesease;
 }

@@ -90,6 +90,6 @@ abstract class ControllerSubmitionBase with Store {
         Provider.of<DiseaseProvider>(context, listen: false).changeSelectedDesease(element);
       }
     });
-    Navigator.push(context, MaterialPageRoute(builder: (context) => DeseaseDetail()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => DeseaseDetail(disease: new Disease())));
   }
 }

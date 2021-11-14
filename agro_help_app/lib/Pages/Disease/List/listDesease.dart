@@ -2,9 +2,11 @@ import 'package:agro_help_app/Pages/Disease/Details/deseaseDetail.dart';
 import 'package:agro_help_app/Pages/utils.dart';
 import 'package:agro_help_app/provider/diseaseProvider.dart';
 import 'package:agro_help_app/utils/doenca.dart';
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 //https://www.youtube.com/watch?v=YA_fHCF_EYc&ab_channel=JohannesMilke
 import 'controllerSubmit.dart';
@@ -61,7 +63,7 @@ class SubmitImage extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Icon(Icons.camera_alt),
                 ),
-                _utils.simpleText("Classificar por imagem", color: Colors.white, fontSize: 16),
+                _utils.simpleText("Classificar por imagem", color: Colors.white, fontSize: 18),
               ],
             ),
           ),
@@ -70,11 +72,60 @@ class SubmitImage extends StatelessWidget {
     );
   }
 
-  Widget _doencaCard(BuildContext context, {dynamic nomeDoenca}) {
-    try {
-      return Card(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+  Widget _loadData(BuildContext context, {dynamic doenca}) {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection(doenca['doenca']!).snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Container(
+              height: 80,
+              child: Card(
+                child: Center(
+                  child: Container(
+                      height: 8, padding: const EdgeInsets.fromLTRB(16, 8, 16, 8), child: CircularProgressIndicator()),
+                ),
+              ),
+            );
+          case ConnectionState.active:
+            if (snapshot.hasData) {
+              try {
+                final docs = snapshot.data!.docs;
+                Disease disease = new Disease();
+                disease.name = doenca['doenca'];
+                disease.namePT = doenca['doencaPT'] ?? 'Dados não definidos';
+                disease.caracteristc = docs[0].data()['caracteristica'] ?? '';
+                disease.treatement = docs[0].data()['combate'] ?? '';
+                disease.prevention = docs[0].data()['evitar'] ?? '';
+                disease.font = docs[0].data()['fonte'] ?? '';
+
+                Provider.of<DiseaseProvider>(context, listen: false).fruit.desease.add(disease);
+
+                return _cardDoenca(context, disease);
+              } catch (e) {
+                return _erorrInternet();
+              }
+            }
+            return _erorrInternet();
+          default:
+            return _erorrInternet();
+        }
+      },
+    );
+  }
+
+  Widget _cardDoenca(BuildContext context, Disease disease) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: OpenContainer(
+        closedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        transitionDuration: Duration(milliseconds: 560),
+        closedColor: Theme.of(context).cardColor,
+        openBuilder: (context, _) {
+          return DeseaseDetail(disease: disease);
+        },
+        closedBuilder: (context, VoidCallback openContainer) => GestureDetector(
+          onTap: openContainer,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -82,36 +133,41 @@ class SubmitImage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: _utils.oneImage(
-                      'files/${Provider.of<DiseaseProvider>(context, listen: false).fruit.dbName}/${nomeDoenca['doenca']}/',
+                      'files/${Provider.of<DiseaseProvider>(context, listen: false).fruit.dbName}/${disease.name}/',
                       width: witdh * 0.2,
                       height: witdh * 0.2),
                 ),
-                Container(
-                  width: witdh * 0.7,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                          alignment: Alignment.bottomLeft,
-                          child: _utils.simpleTextSelectable(
-                            nomeDoenca['doencaPT'] ?? 'Dado nao definido',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            textAlign: TextAlign.start,
-                          )),
-                      _catacterisitica(doenca: nomeDoenca)
-                    ],
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                        alignment: Alignment.bottomLeft,
+                        child: _utils.simpleTextSelectable(
+                          disease.namePT,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          textAlign: TextAlign.start,
+                        )),
+                    _text('Caracteristica: ', disease.caracteristc),
+                    _text('Combate: ', disease.treatement),
+                    _text('Prevenção: ', disease.prevention),
+                  ],
                 ),
               ],
             ),
           ),
         ),
-      );
-    } catch (_) {
-      return Container();
-    }
+      ),
+    );
+  }
+
+  Widget _erorrInternet() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+      child: _utils.simpleText('Erro ao carregar dados, verifique sua conexção com a internet!',
+          fontSize: 18, fontWeight: FontWeight.w400),
+    );
   }
 
   Widget _listdDeseas(BuildContext context) {
@@ -129,8 +185,8 @@ class SubmitImage extends StatelessWidget {
 
             case ConnectionState.waiting:
               return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: LinearProgressIndicator(),
+                padding: const EdgeInsets.fromLTRB(8, 24, 8, 8),
+                child: CircularProgressIndicator(),
               );
 
             case ConnectionState.active:
@@ -141,7 +197,7 @@ class SubmitImage extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: docs.length,
                   itemBuilder: (_, i) {
-                    return _doencaCard(context, nomeDoenca: docs[i]);
+                    return _loadData(context, doenca: docs[i]);
                   },
                 );
               } else {
@@ -155,75 +211,6 @@ class SubmitImage extends StatelessWidget {
     } catch (e) {
       return _utils.simpleText('Algo deu errado, tente mais tarde :(');
     }
-  }
-
-  Widget _catacterisitica({dynamic? doenca}) {
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection(doenca['doenca']!).snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return CircularProgressIndicator();
-          case ConnectionState.active:
-            if (snapshot.hasData) {
-              try {
-                final docs = snapshot.data!.docs;
-                Disease disease = new Disease();
-                disease.name = doenca['doenca'];
-                disease.namePT = doenca['doencaPT'] ?? 'Dados não definidos';
-                disease.caracteristc = docs[0].data()['caracteristica'] ?? '';
-                disease.treatement = docs[0].data()['combate'] ?? '';
-                disease.prevention = docs[0].data()['evitar'] ?? '';
-                disease.font = docs[0].data()['fonte'] ?? '';
-
-                Provider.of<DiseaseProvider>(context, listen: false).fruit.desease.add(disease);
-
-                return GestureDetector(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      _text('Caracteristica: ', disease.caracteristc),
-                      _text('Combate: ', disease.treatement),
-                      _text('Prevenção: ', disease.prevention),
-                    ],
-                  ),
-                  onTap: () {
-                    Provider.of<DiseaseProvider>(context, listen: false).changeSelectedDesease(disease);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => DeseaseDetail()));
-                  },
-                );
-              } catch (e) {
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                  child: _utils.simpleText(
-                    'Erro ao carregar dados, verifique sua conexção com a internet!',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                  ),
-                );
-              }
-            }
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-              child: _utils.simpleText(
-                'Erro ao carregar dados, verifique sua conexção com a internet!',
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-              ),
-            );
-          default:
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-              child: _utils.simpleText(
-                'Erro ao carregar dados, verifique sua conexção com a internet!',
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-              ),
-            );
-        }
-      },
-    );
   }
 
   Widget _text(String str1, String str2) {

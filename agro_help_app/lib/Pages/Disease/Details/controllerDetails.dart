@@ -18,9 +18,7 @@ abstract class _ControllerDetailsBase with Store {
 
   @action
   loadImages(BuildContext context, {double? height, double? width}) async {
-
-
-    this._images = await _utils.manyImages(Provider.of<DiseaseProvider>(context, listen: false).url,
+    this._images = await _utils.manyImages(Provider.of<DiseaseProvider>(context, listen: false).urlImagensFruta,
         width: width!, height: height!);
   }
 

@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../utils.dart';
+import 'package:animations/animations.dart';
 
 Utils _utils = new Utils();
 
@@ -17,8 +18,6 @@ class DashBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     futureFiles = FirebaseApi.listAll('files/');
 
-    //var height = MediaQuery.of(context).size.height;
-    //var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: _utils.simpleText(_utils.name(), fontSize: 36, fontWeight: FontWeight.bold),
@@ -26,14 +25,7 @@ class DashBoard extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
-            SizedBox(height: 190, child: _imagensDashboard(context)),
-            _newsDashboard(),
-            //_buttonLoginOut(context),
-            SizedBox(
-              height: 32,
-            )
-          ],
+          children: [SizedBox(height: 190, child: _imagensDashboard(context)), _newsDashboard(), SizedBox(height: 32)],
         ),
       ),
       drawer: HomeDrawer(),
@@ -101,100 +93,55 @@ class DashBoard extends StatelessWidget {
     );
   }
 
-  Widget buildFile(BuildContext context, FirebaseFile file) => ListTile(
-        leading: ClipOval(
-          child: Image.network(
-            file.url,
-            width: 52,
-            height: 52,
-            fit: BoxFit.cover,
-          ),
-        ),
-        title: _utils.simpleText(file.name),
-      );
-
   Widget _imagensDashboard(BuildContext context) {
-    return ListView(
-      // alignment: WrapAlignment.center,
-      padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-      scrollDirection: Axis.horizontal,
-      children: <Widget>[
-        Consumer<DiseaseProvider>(
-          builder: (context, fruit, child) {
-            return InkWell(
-              child: cardImage('assets/img/icons/apple.png', color: Colors.red.shade100, name: 'Maçã'),
-              onTap: () {
-                fruit.fruit.changeName('Maçã');
-
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitImage(selected: 0)));
-              },
-            );
-          },
-        ),
-        Consumer<DiseaseProvider>(
-          builder: (context, fruit, child) {
-            return InkWell(
-              child: cardImage('assets/img/icons/corn.png', color: Colors.yellow.shade100, name: 'Milho'),
-              onTap: () {
-                fruit.fruit.changeName('Milho');
-
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitImage(selected: 1)));
-              },
-            );
-          },
-        ),
-        Consumer<DiseaseProvider>(
-          builder: (context, fruit, child) {
-            return InkWell(
-              child: cardImage('assets/img/icons/grape.png', color: Colors.purple.shade100, name: 'Uva'),
-              onTap: () {
-                fruit.fruit.changeName('Uva');
-
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitImage(selected: 2)));
-              },
-            );
-          },
-        ),
-        Consumer<DiseaseProvider>(
-          builder: (context, fruit, child) {
-            return InkWell(
-              child: cardImage('assets/img/icons/tomato.png', color: Colors.red.shade100, name: 'Tomate'),
-              onTap: () {
-                fruit.fruit.changeName('Tomate');
-
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitImage(selected: 3)));
-              },
-            );
-          },
-        ),
-      ],
-    );
+    return Consumer<DiseaseProvider>(builder: (context, fruit, child) {
+      return ListView(
+        // alignment: WrapAlignment.center,
+        padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          cardImage('assets/img/icons/apple.png',
+              fruit: fruit, color: Colors.red.shade100, name: 'Maçã', submitImage: SubmitImage(selected: 0)),
+          cardImage('assets/img/icons/corn.png',
+              color: Colors.yellow.shade100, name: 'Milho', fruit: fruit, submitImage: SubmitImage(selected: 1)),
+          cardImage('assets/img/icons/grape.png',
+              color: Colors.purple.shade100, name: 'Uva', fruit: fruit, submitImage: SubmitImage(selected: 2)),
+          cardImage('assets/img/icons/tomato.png',
+              color: Colors.red.shade100, name: 'Tomate', fruit: fruit, submitImage: SubmitImage(selected: 3)),
+        ],
+      );
+    });
   }
 
-  Widget cardImage(String imageRoute, {@required Color? color, String name = ""}) {
-    return Container(
-      width: 130,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: color,
-        child: Column(
-          children: [
-            ListTile(
-              title: Image.asset(
-                imageRoute,
-                height: 120,
-                width: 120,
-                fit: BoxFit.fitWidth,
-              ),
+  Widget cardImage(
+    String imageRoute, {
+    @required Color? color,
+    @required SubmitImage? submitImage,
+    @required DiseaseProvider? fruit,
+    @required String? name,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: OpenContainer(
+        closedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(36)),
+        transitionDuration: Duration(milliseconds: 560),
+        closedColor: color!,
+        openBuilder: (context, _) {
+          fruit!.fruit.changeName(name!);
+          return SubmitImage(selected: 0);
+        },
+        closedBuilder: (context, VoidCallback openContainer) => GestureDetector(
+          onTap: openContainer,
+          child: Container(
+            width: 136,
+            child: Column(
+              children: [
+                ListTile(title: Image.asset(imageRoute, height: 110, width: 110, fit: BoxFit.fitWidth)),
+                _utils.simpleText(name!, fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)
+              ],
             ),
-            _utils.simpleText(name, fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)
-          ],
+          ),
         ),
-        elevation: 8,
-        shadowColor: color!,
-        margin: EdgeInsets.all(8),
       ),
     );
   }

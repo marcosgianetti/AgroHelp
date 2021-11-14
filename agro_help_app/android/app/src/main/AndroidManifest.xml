@@ -22,7 +22,7 @@
   </queries>
 
    <application
-        android:label="Agro Live"
+        android:label="Agro Help"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
