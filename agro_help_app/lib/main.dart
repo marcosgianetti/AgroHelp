@@ -21,21 +21,30 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  //PALETA DE CORES
+  //Color.fromRGBO(180, 219, 187, 1),
+  //Color.fromRGBO(43, 56, 37, 1),
+  //Color.fromRGBO(249, 255, 237, 1),
+  //Color.fromRGBO(177, 195, 184, 1),
+  //Color.fromARGB(105, 103, 88, 1),
+  //Color.fromARGB(79, 115, 68, 1),
+  //Color.fromRGBO(43, 56, 37, 1),
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _utils.name(),
       theme: ThemeData(
-        // buttonColor: Color.fromRGBO(69, 74, 245, 1),
-        primaryColor: Colors.blueAccent.shade200,
-        primaryColorDark: Colors.green.shade700,
-        primarySwatch: Colors.green,
-        cardColor: Colors.green.shade50,
+        brightness: Brightness.dark,
+        //buttonColor: Color.fromARGB(79, 115, 68, 1),
+
+        primaryColor: Color.fromRGBO(43, 56, 37, 1),
+        cardColor: Color.fromRGBO(105, 103, 88, 1),
         scaffoldBackgroundColor: Color.fromRGBO(177, 195, 184, 1),
-        secondaryHeaderColor: Colors.red.shade700,
-        shadowColor: Colors.green.shade500,
-        hintColor: Colors.greenAccent.shade700,
-        backgroundColor: Colors.blueAccent.shade200,
+        secondaryHeaderColor: Color.fromRGBO(180, 219, 187, 1),
+        shadowColor: Color.fromARGB(79, 115, 68, 1),
+        //hintColor: Colors.greenAccent.shade700,
+        //backgroundColor: Colors.blueAccent.shade200,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       darkTheme: ThemeData.dark(),

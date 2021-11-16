@@ -6,7 +6,6 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 //https://www.youtube.com/watch?v=YA_fHCF_EYc&ab_channel=JohannesMilke
 import 'controllerSubmit.dart';
@@ -35,12 +34,6 @@ class SubmitImage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
-              child: Center(
-                child: _utils.simpleText('Listagem de doenças', fontSize: 24, fontWeight: FontWeight.w600),
-              ),
-            ),
             _listdDeseas(context),
             SizedBox(
               height: 32,
@@ -126,9 +119,11 @@ class SubmitImage extends StatelessWidget {
         },
         closedBuilder: (context, VoidCallback openContainer) => GestureDetector(
           onTap: openContainer,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -137,22 +132,30 @@ class SubmitImage extends StatelessWidget {
                       width: witdh * 0.2,
                       height: witdh * 0.2),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                        alignment: Alignment.bottomLeft,
-                        child: _utils.simpleTextSelectable(
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: witdh * 0.75,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.only(topRight: Radius.circular(24)),
+                        ),
+                        padding: const EdgeInsets.all(8.0),
+                        child: _utils.simpleText(
                           disease.namePT,
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
-                          textAlign: TextAlign.start,
-                        )),
-                    _text('Caracteristica: ', disease.caracteristc),
-                    _text('Combate: ', disease.treatement),
-                    _text('Prevenção: ', disease.prevention),
-                  ],
+                          //textAlign: TextAlign.start,
+                        ),
+                      ),
+                      _text('Caracteristica: ', disease.caracteristc),
+                      _text('Combate: ', disease.treatement),
+                      _text('Prevenção: ', disease.prevention),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -184,9 +187,11 @@ class SubmitImage extends StatelessWidget {
               return _utils.simpleText('Verifique sua conecxão com a internet');
 
             case ConnectionState.waiting:
-              return Padding(
-                padding: const EdgeInsets.fromLTRB(8, 24, 8, 8),
-                child: CircularProgressIndicator(),
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 24, 8, 8),
+                  child: CircularProgressIndicator(),
+                ),
               );
 
             case ConnectionState.active:
@@ -214,11 +219,22 @@ class SubmitImage extends StatelessWidget {
   }
 
   Widget _text(String str1, String str2) {
+    var e = str2.split(' ');
+    String str3 = '';
+    if (e.length > 8) {
+      e.removeRange(8, e.length);
+      str2 = '';
+      e.forEach((element) {
+        str2 += '$element ';
+      });
+      str2 += '...';
+    }
+
     return Visibility(
       visible: str2 != '',
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-        child: _utils.simpleText(str1 + str2.substring(0, str2.length < 20 ? str2.length : 20) + '...', fontSize: 14),
+        padding: const EdgeInsets.fromLTRB(0, 4, 4, 4),
+        child: Container(child: _utils.simpleText(str1 + str2, fontSize: 14)),
       ),
     );
   }

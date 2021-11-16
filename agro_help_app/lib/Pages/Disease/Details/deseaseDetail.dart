@@ -22,7 +22,6 @@ class DeseaseDetail extends StatelessWidget {
   Fruit _fruit = new Fruit();
   Disease _disease = new Disease();
   Disease disease = new Disease();
-
   DeseaseDetail({Key? key, required this.disease}) : super(key: key);
 
   @override
@@ -44,6 +43,8 @@ class DeseaseDetail extends StatelessWidget {
     Future.delayed(Duration.zero, () async {
       _controller.checkScore(context, _disease.score * 100);
     });
+    var brightness = MediaQuery.of(context).platformBrightness;
+    bool _isDarkMode = brightness == Brightness.dark;
 
     return Scaffold(
       appBar: new AppBar(
@@ -55,6 +56,16 @@ class DeseaseDetail extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Container(
+              //color: Theme.of(context).secondaryHeaderColor,
+              child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+                  child: _utils.simpleTextSelectable('${_disease.namePT}',
+                      color: _isDarkMode ? Colors.white : Colors.black,
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.center)),
+            ),
             Container(
               height: _height / 3,
               child: Observer(
@@ -75,11 +86,6 @@ class DeseaseDetail extends StatelessWidget {
             ),
             Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _utils.simpleTextSelectable('${_disease.namePT}',
-                      fontSize: 32, fontWeight: FontWeight.bold, textAlign: TextAlign.center),
-                ),
                 Visibility(
                   visible: _disease.score > 0.0,
                   child: Padding(
@@ -93,9 +99,9 @@ class DeseaseDetail extends StatelessWidget {
                 ),
                 _card(context, 'Característica', _disease.caracteristc),
                 _card(context, 'Prevenção', _disease.prevention),
-                anuncio(context),
+                anuncio(context, openBuilder: new StoreAgro()),
                 _card(context, 'Tratamento', _disease.treatement),
-                _card2('Fonte', _disease.font),
+                _card(context, 'Fonte', _disease.font),
                 SizedBox(height: 32),
               ],
             ),
@@ -105,14 +111,14 @@ class DeseaseDetail extends StatelessWidget {
     );
   }
 
-  Widget anuncio(BuildContext context) {
+  Widget anuncio(BuildContext context, {Widget? openBuilder}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: OpenContainer(
         closedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        transitionDuration: Duration(milliseconds: 560),
+        transitionDuration: Duration(milliseconds: 480),
         closedColor: Color.fromRGBO(105, 103, 88, 1),
-        openBuilder: (context, _) => StoreAgro(),
+        openBuilder: (context, _) => openBuilder!,
         closedBuilder: (context, VoidCallback openContainer) => GestureDetector(
           onTap: openContainer,
           child: Column(
@@ -163,71 +169,60 @@ class DeseaseDetail extends StatelessWidget {
     );
   }
 
-  Widget _card2(String title, String str) {
+  Widget _card(BuildContext context, String title, String str) {
     return Visibility(
       visible: str != '',
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: _utils.simpleTextSelectable(title,
-                    fontSize: 20, textAlign: TextAlign.center, fontWeight: FontWeight.w500),
-              ),
-              TextButton(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(child: _utils.simpleText(str, fontSize: 16, color: Colors.blue)),
-                ),
-                onPressed: () async {
-                  if (await canLaunch(str)) {
-                    await launch(str);
-                  } else {
-                    Fluttertoast.showToast(
-                      msg: "Erro ao fazer compra",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                    );
-                  }
-                },
-              )
-            ],
-          ),
+      child: _utils.agroCard(
+        context,
+        title: Row(
+          children: [
+            _iconCard(title),
+            _utils.simpleTextSelectable(title, fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+          ],
         ),
+        body: title == 'Fonte'
+            ? _fonte(str)
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(child: _utils.simpleTextSelectable(str, fontSize: 16))),
       ),
     );
   }
 
-  Widget _card(BuildContext context, String title, String str) {
-    return Visibility(
-      visible: str != '',
+  Widget _iconCard(String title) {
+    Icon icon = new Icon(Icons.check);
+
+    if (title == 'Característica') {
+      icon = Icon(MdiIcons.exclamation);
+    } else if (title == 'Fonte') {
+      icon = Icon(MdiIcons.book);
+    } else if (title == 'Tratamento') {
+      icon = Icon(Icons.sports);
+    }
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: icon,
+    );
+  }
+
+  Widget _fonte(String str) {
+    return TextButton(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24.0),
-          ),
-          child: Column(
-            children: [
-              Container(
-                color: Color.fromRGBO(43, 56, 37, 1),
-                width: MediaQuery.of(context).size.width * 0.9,
-                padding: const EdgeInsets.all(8.0),
-                child:
-                    _utils.simpleTextSelectable(title, fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(child: _utils.simpleTextSelectable(str, fontSize: 16)),
-              ),
-            ],
-          ),
-        ),
+        child: Center(child: _utils.simpleText(str, fontSize: 16, color: Colors.blue)),
       ),
+      onPressed: () async {
+        if (await canLaunch(str)) {
+          await launch(str);
+        } else {
+          Fluttertoast.showToast(
+            msg: "Erro ao fazer compra",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+          );
+        }
+      },
     );
   }
 }

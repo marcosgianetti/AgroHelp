@@ -49,10 +49,7 @@ class DashBoard extends StatelessWidget {
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (_, i) {
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                        child: Card(child: _utils.newsCart(docs[i])),
-                      );
+                      return _utils.newsCart(context, docs[i]);
                     });
               } catch (e) {
                 return Padding(
@@ -124,8 +121,9 @@ class DashBoard extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: OpenContainer(
         closedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(36)),
-        transitionDuration: Duration(milliseconds: 560),
+        transitionDuration: Duration(milliseconds: 480),
         closedColor: color!,
+        transitionType: ContainerTransitionType.fade,
         openBuilder: (context, _) {
           fruit!.fruit.changeName(name!);
           return SubmitImage(selected: 0);

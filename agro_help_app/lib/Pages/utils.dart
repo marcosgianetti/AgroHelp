@@ -31,7 +31,6 @@ class Utils {
   }) {
     return SelectableText(
       str.replaceAll('\\\\n', '\n'),
-      // showCursor: true,
       cursorWidth: 5,
       textAlign: textAlign,
       cursorRadius: Radius.circular(5),
@@ -39,6 +38,32 @@ class Utils {
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,
+      ),
+    );
+  }
+
+  Widget agroCard(BuildContext context, {required Widget title, required Widget body}) {
+    double _raduisRounded = 24.0;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        margin: EdgeInsets.zero,
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_raduisRounded)),
+        child: Column(
+          children: [
+            Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(_raduisRounded), topLeft: Radius.circular(_raduisRounded)),
+                ),
+                width: double.infinity,
+                padding: const EdgeInsets.all(8.0),
+                child: title),
+            body,
+          ],
+        ),
       ),
     );
   }
@@ -159,30 +184,30 @@ class Utils {
     }
   }
 
-  Widget newsCart(dynamic docs) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
+  Widget newsCart(BuildContext context, dynamic docs) {
+    return agroCard(
+      context,
+      title: docs.data()['Title'] != null
+          ? Padding(
+              padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+              child: simpleTextSelectable('${docs['Title']}',
+                  fontSize: 32, textAlign: TextAlign.center, fontWeight: FontWeight.bold),
+            )
+          : Container(),
+      body: Column(
         //   crossAxisAlignment: CrossAxisAlignment.center,
         //  mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          docs.data()['Title'] != null
-              ? Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 4, 0, 8),
-                  child: simpleTextSelectable('${docs['Title']}',
-                      fontSize: 32, textAlign: TextAlign.center, fontWeight: FontWeight.bold),
-                )
-              : Container(),
           docs.data()['Subtitle'] != null
               ? Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 4, 0, 8),
+                  padding: const EdgeInsets.all(8),
                   child: simpleTextSelectable('${docs['Subtitle']}',
                       textAlign: TextAlign.start, fontSize: 24, fontWeight: FontWeight.w500),
                 )
               : Container(),
           docs.data()['Body'] != null
               ? Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                  padding: const EdgeInsets.all(8),
                   child: simpleTextSelectable('${docs['Body']}',
                       textAlign: TextAlign.start, fontSize: 16, fontWeight: FontWeight.w400),
                 )
