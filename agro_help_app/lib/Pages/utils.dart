@@ -42,10 +42,11 @@ class Utils {
     );
   }
 
-  Widget agroCard(BuildContext context, {required Widget title, required Widget body}) {
+  Widget agroCard(BuildContext context, {required Widget title, required Widget body, EdgeInsets? padding}) {
     double _raduisRounded = 24.0;
+    padding = padding ?? EdgeInsets.all(8.0);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: padding,
       child: Card(
         margin: EdgeInsets.zero,
         elevation: 4,
@@ -54,12 +55,12 @@ class Utils {
           children: [
             Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).secondaryHeaderColor,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(_raduisRounded), topLeft: Radius.circular(_raduisRounded)),
                 ),
                 width: double.infinity,
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
                 child: title),
             body,
           ],

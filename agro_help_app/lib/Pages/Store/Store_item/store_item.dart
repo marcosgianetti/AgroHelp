@@ -7,19 +7,29 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 Utils _utils = new Utils();
 
-class StoreIten extends StatefulWidget {
-  const StoreIten({Key? key}) : super(key: key);
+class StoreIten extends StatelessWidget {
+  final title;
+  final img;
+  final price;
+  final tamanho;
+  final desc;
+  final List<Color>? colors;
 
-  @override
-  _StoreItenState createState() => _StoreItenState();
-}
+  const StoreIten({
+    Key? key,
+    this.title,
+    this.img,
+    this.price,
+    this.tamanho,
+    this.desc,
+    this.colors,
+  }) : super(key: key);
 
-class _StoreItenState extends State<StoreIten> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: Center(child: _utils.simpleText('Loja', fontSize: 36, fontWeight: FontWeight.bold)),
+        title: Center(child: _utils.simpleText(title, fontSize: 28, fontWeight: FontWeight.bold)),
         actions: [Image.asset('assets/img/logo.png')],
       ),
       body: SingleChildScrollView(
@@ -30,13 +40,21 @@ class _StoreItenState extends State<StoreIten> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //FOTO
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
-                  child: Image.asset('assets/img/store/shirt.png', fit: BoxFit.scaleDown)),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height / 3,
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
+                      child: Image.asset(img, fit: BoxFit.scaleDown)),
+                ],
+              ),
               //PREÇO & avaliação
               Row(
                 children: [
-                  _utils.simpleTextSelectable('R\$: 100,00', fontSize: 24, fontWeight: FontWeight.w600),
+                  _utils.simpleTextSelectable(price, fontSize: 24, fontWeight: FontWeight.w600),
                   Spacer(),
                   _stars()
                 ],
@@ -44,7 +62,7 @@ class _StoreItenState extends State<StoreIten> {
               //DESCRIÇÃO
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                child: _utils.simpleTextSelectable('Camisa Polo confortável e discreta',
+                child: _utils.simpleTextSelectable(desc,
                     fontSize: 16, fontWeight: FontWeight.w600, textAlign: TextAlign.start),
               ),
               //TAMANHO
@@ -56,11 +74,21 @@ class _StoreItenState extends State<StoreIten> {
               ),
               //CORES
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(padding: const EdgeInsets.all(8.0), child: _colors(Colors.black)),
-                  Padding(padding: const EdgeInsets.all(8.0), child: _colors(Colors.grey.shade400)),
-                  Padding(padding: const EdgeInsets.all(8.0), child: _colors(Colors.green.shade400)),
+                  Container(
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: 50,
+                    child: ListView.builder(
+                        itemCount: colors!.length,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemBuilder: (context, i) {
+                          return Padding(padding: const EdgeInsets.fromLTRB(8, 4, 8, 0), child: _colors(colors![i]));
+                        }),
+                  ),
                 ],
               ),
               //CEP
@@ -187,6 +215,7 @@ class _StoreItenState extends State<StoreIten> {
       width: 24,
       height: 24,
       decoration: new BoxDecoration(
+        border: Border.all(color: Colors.blueAccent),
         color: color,
         shape: BoxShape.circle,
       ),

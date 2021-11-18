@@ -17,21 +17,43 @@ import 'controllerDetails.dart';
 Utils _utils = new Utils();
 ControllerDeails _controller = ControllerDeails();
 
-class DeseaseDetail extends StatelessWidget {
-  double _height = 0.0;
-  Fruit _fruit = new Fruit();
-  Disease _disease = new Disease();
+class DeseaseDetail extends StatefulWidget {
   Disease disease = new Disease();
   DeseaseDetail({Key? key, required this.disease}) : super(key: key);
 
   @override
+  _DeseaseDetailState createState() => _DeseaseDetailState();
+}
+
+class _DeseaseDetailState extends State<DeseaseDetail> {
+  double _height = 0.0;
+
+  Fruit _fruit = new Fruit();
+  bool _isDarkMode = false;
+
+  Disease _disease = new Disease();
+  @protected
+  @mustCallSuper
+  void dispose() {
+    _controller.cleanImages();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
+    var brightness = MediaQuery.of(context).platformBrightness;
+    _isDarkMode = brightness == Brightness.dark;
     _fruit = Provider.of<DiseaseProvider>(context, listen: false).fruit;
-    if (disease.namePT == '')
+    if (widget.disease.namePT == '')
       _disease = Provider.of<DiseaseProvider>(context, listen: false).selectedDesease;
     else {
-      _disease = disease;
+      _disease = widget.disease;
       //_disease = Provider.of<DiseaseProvider>(context, listen: false).selectedDesease;
       Future.delayed(Duration(milliseconds: 5), () async {
         Provider.of<DiseaseProvider>(context, listen: false).changeSelectedDesease(_disease);
@@ -43,9 +65,6 @@ class DeseaseDetail extends StatelessWidget {
     Future.delayed(Duration.zero, () async {
       _controller.checkScore(context, _disease.score * 100);
     });
-    var brightness = MediaQuery.of(context).platformBrightness;
-    bool _isDarkMode = brightness == Brightness.dark;
-
     return Scaffold(
       appBar: new AppBar(
         title: Center(
@@ -99,7 +118,7 @@ class DeseaseDetail extends StatelessWidget {
                 ),
                 _card(context, 'Característica', _disease.caracteristc),
                 _card(context, 'Prevenção', _disease.prevention),
-                anuncio(context, openBuilder: new StoreAgro()),
+                _anuncio(context, openBuilder: new StoreAgro()),
                 _card(context, 'Tratamento', _disease.treatement),
                 _card(context, 'Fonte', _disease.font),
                 SizedBox(height: 32),
@@ -111,58 +130,56 @@ class DeseaseDetail extends StatelessWidget {
     );
   }
 
-  Widget anuncio(BuildContext context, {Widget? openBuilder}) {
+  Widget _anuncio(BuildContext context, {Widget? openBuilder}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: OpenContainer(
         closedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         transitionDuration: Duration(milliseconds: 480),
-        closedColor: Color.fromRGBO(105, 103, 88, 1),
         openBuilder: (context, _) => openBuilder!,
-        closedBuilder: (context, VoidCallback openContainer) => GestureDetector(
+        closedBuilder: (context, VoidCallback openContainer) => new GestureDetector(
           onTap: openContainer,
-          child: Column(
-            children: [
-              Container(
-                color: Color.fromRGBO(43, 56, 37, 1),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.store, color: Colors.white, size: 24),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        padding: EdgeInsets.fromLTRB(0, 8, 8, 8),
-                        child: _utils.simpleText('Venha já conhecer nossos produtos da Agro Help Store',
-                            color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                      )
+          child: _utils.agroCard(
+            context,
+            padding: EdgeInsets.all(0),
+            title: Row(
+              children: [
+                Icon(Icons.store, color: Colors.white, size: 24),
+                Container(
+                  padding: EdgeInsets.only(left: 8),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: _utils.simpleText('Venha já conhecer nossos produtos da Agro Help Store',
+                      fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+            body: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  alignment: Alignment.topLeft,
+                  height: 80,
+                  child: _utils.simpleText('Camisas, chapéis, roupas para trabalho e muito mais.',
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  height: 180,
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                      autoPlay: _controller.images.length > 1,
+                      aspectRatio: 16 / 9,
+                      enlargeCenterPage: true,
+                    ),
+                    items: [
+                      Image.asset('assets/img/store/roupa.png', height: 180),
+                      Image.asset('assets/img/store/chapeu.png', height: 180),
+                      Image.asset('assets/img/store/shirt.png', height: 180),
                     ],
                   ),
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-                alignment: Alignment.topLeft,
-                height: 80,
-                child: _utils.simpleText('Camisas, chapéis, roupas para trabalho e muito mais.',
-                    fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-              ),
-              Container(
-                height: 176,
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    autoPlay: _controller.images.length > 1,
-                    aspectRatio: 16 / 9,
-                    enlargeCenterPage: true,
-                  ),
-                  items: _controller.images,
-                ),
-              ),
-              SizedBox(height: 8)
-            ],
+                SizedBox(height: 16)
+              ],
+            ),
           ),
         ),
       ),
@@ -190,14 +207,14 @@ class DeseaseDetail extends StatelessWidget {
   }
 
   Widget _iconCard(String title) {
-    Icon icon = new Icon(Icons.check);
+    Icon icon = new Icon(Icons.check, color: Colors.white);
 
     if (title == 'Característica') {
-      icon = Icon(MdiIcons.exclamation);
+      icon = Icon(MdiIcons.exclamation, color: Colors.white);
     } else if (title == 'Fonte') {
-      icon = Icon(MdiIcons.book);
+      icon = Icon(MdiIcons.book, color: Colors.white);
     } else if (title == 'Tratamento') {
-      icon = Icon(Icons.sports);
+      icon = Icon(Icons.sports, color: Colors.white);
     }
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),

@@ -140,7 +140,7 @@ class SubmitImage extends StatelessWidget {
                       Container(
                         width: witdh * 0.75,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).secondaryHeaderColor,
                           borderRadius: BorderRadius.only(topRight: Radius.circular(24)),
                         ),
                         padding: const EdgeInsets.all(8.0),

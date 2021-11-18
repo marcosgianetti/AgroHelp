@@ -64,6 +64,7 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   url_launcher: ^6.0.9
   fluttertoast: ^8.0.8
+  flutter_staggered_grid_view: ^0.4.1
 
 
 dev_dependencies:
@@ -109,6 +110,8 @@ flutter:
       - assets/ml/tomato/tomato.tflite
       - assets/ml/tomato/tomato.txt
       - assets/img/store/shirt.png
+      - assets/img/store/chapeu.png
+      - assets/img/store/roupa.png
       
 
   # An image asset can refer to one or more resolution-specific "variants", see

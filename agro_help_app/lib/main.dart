@@ -10,7 +10,6 @@ Utils _utils = Utils();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  //await FirebaseAppCheck.instance.activate(webRecaptchaSiteKey: 'recaptcha-v3-site-key');
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => DiseaseProvider()),
@@ -35,6 +34,27 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _utils.name(),
       theme: ThemeData(
+        buttonColor: Colors.purpleAccent,
+        primaryColor: Colors.blueAccent.shade200,
+        primaryColorDark: Colors.green.shade700,
+        primarySwatch: Colors.green,
+        cardColor: Colors.green.shade50,
+        secondaryHeaderColor: Colors.green.shade700,
+        shadowColor: Colors.green.shade500,
+        hintColor: Colors.greenAccent.shade700,
+        backgroundColor: Colors.blueAccent.shade200,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      darkTheme: ThemeData.dark(),
+      debugShowCheckedModeBanner: false,
+      home: Splash(),
+      // supportedLocales: const <Locale>[Locale('pt', 'BR')],
+    );
+  }
+}
+/*
+FUTURO THEME
+ThemeData(
         brightness: Brightness.dark,
         //buttonColor: Color.fromARGB(79, 115, 68, 1),
 
@@ -46,11 +66,4 @@ class MyApp extends StatelessWidget {
         //hintColor: Colors.greenAccent.shade700,
         //backgroundColor: Colors.blueAccent.shade200,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      darkTheme: ThemeData.dark(),
-      debugShowCheckedModeBanner: false,
-      home: Splash(),
-      // supportedLocales: const <Locale>[Locale('pt', 'BR')],
-    );
-  }
-}
+      ),*/
