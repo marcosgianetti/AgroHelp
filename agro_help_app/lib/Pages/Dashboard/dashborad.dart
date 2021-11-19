@@ -97,39 +97,39 @@ class DashBoard extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          cardImage('assets/img/icons/apple.png',
-              fruit: fruit, color: Colors.red.shade100, name: 'Maçã', submitImage: SubmitImage(selected: 0)),
-          cardImage('assets/img/icons/corn.png',
-              color: Colors.yellow.shade100, name: 'Milho', fruit: fruit, submitImage: SubmitImage(selected: 1)),
-          cardImage('assets/img/icons/grape.png',
-              color: Colors.purple.shade100, name: 'Uva', fruit: fruit, submitImage: SubmitImage(selected: 2)),
-          cardImage('assets/img/icons/tomato.png',
-              color: Colors.red.shade100, name: 'Tomate', fruit: fruit, submitImage: SubmitImage(selected: 3)),
+          cardImage(context, 'assets/img/icons/apple.png',
+              fruit: fruit, color: Colors.red.shade100, name: 'Maçã', selected: 0),
+          cardImage(context, 'assets/img/icons/corn.png',
+              color: Colors.yellow.shade100, name: 'Milho', fruit: fruit, selected: 1),
+          cardImage(context, 'assets/img/icons/grape.png',
+              color: Colors.purple.shade100, name: 'Uva', fruit: fruit, selected: 2),
+          cardImage(context, 'assets/img/icons/tomato.png',
+              color: Colors.red.shade100, name: 'Tomate', fruit: fruit, selected: 3),
         ],
       );
     });
   }
 
   Widget cardImage(
+    BuildContext context,
     String imageRoute, {
     @required Color? color,
-    @required SubmitImage? submitImage,
+    @required int? selected,
     @required DiseaseProvider? fruit,
     @required String? name,
   }) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: OpenContainer(
-        closedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(36)),
-        transitionDuration: Duration(milliseconds: 480),
-        closedColor: color!,
-        transitionType: ContainerTransitionType.fade,
-        openBuilder: (context, _) {
-          fruit!.fruit.changeName(name!);
-          return SubmitImage(selected: 0);
-        },
-        closedBuilder: (context, VoidCallback openContainer) => GestureDetector(
-          onTap: openContainer,
+      padding: const EdgeInsets.all(4.0),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24.0),
+        ),
+        color: color,
+        child: GestureDetector(
+          onTap: () {
+            fruit!.fruit.changeName(name!);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitImage(selected: selected!)));
+          },
           child: Container(
             width: 136,
             child: Column(

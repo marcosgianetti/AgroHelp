@@ -13,8 +13,8 @@ import 'controllerSubmit.dart';
 Utils _utils = new Utils();
 
 class SubmitImage extends StatelessWidget {
-  late int selected = 0;
-  SubmitImage({this.selected: 0});
+  final int selected;
+  SubmitImage({required this.selected});
   late int example = 10;
   double witdh = 0.0;
   final controller = ControllerSumition();
@@ -35,9 +35,7 @@ class SubmitImage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             _listdDeseas(context),
-            SizedBox(
-              height: 32,
-            ),
+            SizedBox(height: 32),
           ],
         ),
       ),
@@ -108,21 +106,20 @@ class SubmitImage extends StatelessWidget {
   }
 
   Widget _cardDoenca(BuildContext context, Disease disease) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: OpenContainer(
-        closedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        transitionDuration: Duration(milliseconds: 560),
-        closedColor: Theme.of(context).cardColor,
-        openBuilder: (context, _) {
-          return DeseaseDetail(disease: disease);
-        },
-        closedBuilder: (context, VoidCallback openContainer) => GestureDetector(
-          onTap: openContainer,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => DeseaseDetail(disease: disease)));
+      },
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(4, 4, 4, 2),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24.0),
+          ),
           child: Container(
             width: MediaQuery.of(context).size.width,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
@@ -154,6 +151,7 @@ class SubmitImage extends StatelessWidget {
                       _text('Caracteristica: ', disease.caracteristc),
                       _text('Combate: ', disease.treatement),
                       _text('Prevenção: ', disease.prevention),
+                      SizedBox(height: 24)
                     ],
                   ),
                 ),

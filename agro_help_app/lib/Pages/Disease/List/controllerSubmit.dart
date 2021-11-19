@@ -25,6 +25,7 @@ abstract class ControllerSubmitionBase with Store {
   //Fruit fruit = new Fruit();
   @action
   void modelSelected(int selected) {
+    print(selected.toString());
     if (selected == 0) {
       modelName = 'ml/apple/apple.tflite';
       labelName = 'assets/ml/apple/apple.txt';
