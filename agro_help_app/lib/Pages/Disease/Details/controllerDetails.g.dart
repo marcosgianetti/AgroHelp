@@ -24,18 +24,18 @@ mixin _$ControllerDeails on _ControllerDetailsBase, Store {
     });
   }
 
-  final _$_alertAtom = Atom(name: '_ControllerDetailsBase._alert');
+  final _$_alertedAtom = Atom(name: '_ControllerDetailsBase._alerted');
 
   @override
-  bool get _alert {
-    _$_alertAtom.reportRead();
-    return super._alert;
+  bool get _alerted {
+    _$_alertedAtom.reportRead();
+    return super._alerted;
   }
 
   @override
-  set _alert(bool value) {
-    _$_alertAtom.reportWrite(value, super._alert, () {
-      super._alert = value;
+  set _alerted(bool value) {
+    _$_alertedAtom.reportWrite(value, super._alerted, () {
+      super._alerted = value;
     });
   }
 
@@ -52,11 +52,11 @@ mixin _$ControllerDeails on _ControllerDetailsBase, Store {
       ActionController(name: '_ControllerDetailsBase');
 
   @override
-  dynamic cleanImages() {
+  dynamic dispose() {
     final _$actionInfo = _$_ControllerDetailsBaseActionController.startAction(
-        name: '_ControllerDetailsBase.cleanImages');
+        name: '_ControllerDetailsBase.dispose');
     try {
-      return super.cleanImages();
+      return super.dispose();
     } finally {
       _$_ControllerDetailsBaseActionController.endAction(_$actionInfo);
     }

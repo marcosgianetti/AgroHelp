@@ -192,12 +192,10 @@ class Utils {
           ? Padding(
               padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
               child: simpleTextSelectable('${docs['Title']}',
-                  fontSize: 32, textAlign: TextAlign.center, fontWeight: FontWeight.bold),
+                  fontSize: 32, textAlign: TextAlign.center, color: Colors.white, fontWeight: FontWeight.w400),
             )
           : Container(),
       body: Column(
-        //   crossAxisAlignment: CrossAxisAlignment.center,
-        //  mainAxisAlignment: MainAxisAlignment.center,
         children: [
           docs.data()['Subtitle'] != null
               ? Padding(
@@ -230,16 +228,14 @@ class Utils {
     )..show();
   }
 
-  alert(BuildContext context, {String? title, String? desc}) {
+  alert(BuildContext context, {String? title, String? desc, Function? btnOkOnPress}) {
     return AwesomeDialog(
       context: context,
       dialogType: DialogType.WARNING,
       animType: AnimType.BOTTOMSLIDE,
       title: title,
       desc: desc,
-      btnOkOnPress: () {
-        //    Navigator.pop(context);
-      },
+      btnOkOnPress: btnOkOnPress,
     )..show();
   }
 

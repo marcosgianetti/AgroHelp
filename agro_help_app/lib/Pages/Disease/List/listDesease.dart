@@ -143,8 +143,9 @@ class SubmitImage extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: _utils.simpleText(
                           disease.namePT,
+                          color: Colors.white,
                           fontSize: 18,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w400,
                           //textAlign: TextAlign.start,
                         ),
                       ),

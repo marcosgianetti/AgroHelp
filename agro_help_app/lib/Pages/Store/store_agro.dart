@@ -33,7 +33,7 @@ class _StoreAgroState extends State<StoreAgro> {
             img: 'assets/img/store/shirt.png',
             price: 'R\$: 100,00',
             desc: 'Camisa Polo confortável e discreta',
-            tamanho: 'Tamanho: P, M, G, GG',
+            tamanho: ['P', 'M', 'G', 'GG'],
             colors: [Colors.black, Colors.grey.shade400, Colors.white],
           ),
           _cardItem(
@@ -42,7 +42,10 @@ class _StoreAgroState extends State<StoreAgro> {
             img: 'assets/img/store/chapeu.png',
             price: 'R\$: 45 ,00',
             desc: 'Chapéu de palha confortável',
-            tamanho: 'Tamanho: M, G',
+            tamanho: [
+              'M',
+              'G',
+            ],
             colors: [Colors.brown.shade100],
           ),
           _cardItem(
@@ -51,7 +54,7 @@ class _StoreAgroState extends State<StoreAgro> {
             img: 'assets/img/store/roupa.png',
             price: 'R\$: 65,00',
             desc: 'Conjunto  calça e camisa manga çonga uniforme trabalho',
-            tamanho: 'Tamanho: M, G, GG',
+            tamanho: ['M', 'G', 'GG'],
             colors: [Colors.grey.shade400, Colors.white],
           ),
         ],
@@ -64,10 +67,15 @@ class _StoreAgroState extends State<StoreAgro> {
     String? title,
     String? img,
     String? price,
-    String? tamanho,
+    List<String>? tamanho,
     String? desc,
     List<Color>? colors,
   }) {
+    String _tamanhos = 'Tamanho: ';
+    tamanho!.forEach((element) {
+      _tamanhos += element + ', ';
+    });
+    _tamanhos = _tamanhos.substring(0, _tamanhos.length - 2);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: OpenContainer(
@@ -106,7 +114,7 @@ class _StoreAgroState extends State<StoreAgro> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
-                  child: _utils.simpleText(tamanho!, fontSize: 16, fontWeight: FontWeight.w700),
+                  child: _utils.simpleText(_tamanhos, fontSize: 16, fontWeight: FontWeight.w700),
                 ),
                 Container(
                   width: (MediaQuery.of(context).size.width * 0.9) / 2,

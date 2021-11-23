@@ -35,8 +35,10 @@ class _DeseaseDetailState extends State<DeseaseDetail> {
   @protected
   @mustCallSuper
   void dispose() {
-    _controller.cleanImages();
+    print('clean');
+    _controller.dispose();
     super.dispose();
+    _disease.score = 0.0;
   }
 
   @override
@@ -54,7 +56,6 @@ class _DeseaseDetailState extends State<DeseaseDetail> {
       _disease = Provider.of<DiseaseProvider>(context, listen: false).selectedDesease;
     else {
       _disease = widget.disease;
-      //_disease = Provider.of<DiseaseProvider>(context, listen: false).selectedDesease;
       Future.delayed(Duration(milliseconds: 5), () async {
         Provider.of<DiseaseProvider>(context, listen: false).changeSelectedDesease(_disease);
         _controller.loadImages(context, width: _height / 3, height: _height / 3);
@@ -76,7 +77,6 @@ class _DeseaseDetailState extends State<DeseaseDetail> {
         child: Column(
           children: [
             Container(
-              //color: Theme.of(context).secondaryHeaderColor,
               child: Padding(
                   padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
                   child: _utils.simpleTextSelectable('${_disease.namePT}',
@@ -149,7 +149,7 @@ class _DeseaseDetailState extends State<DeseaseDetail> {
                   padding: EdgeInsets.only(left: 8),
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: _utils.simpleText('Venha já conhecer nossos produtos da Agro Help Store',
-                      fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                      fontSize: 20, color: Colors.white, fontWeight: FontWeight.w400),
                 )
               ],
             ),
@@ -194,7 +194,7 @@ class _DeseaseDetailState extends State<DeseaseDetail> {
         title: Row(
           children: [
             _iconCard(title),
-            _utils.simpleTextSelectable(title, fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+            _utils.simpleTextSelectable(title, fontSize: 18, fontWeight: FontWeight.w400, color: Colors.white),
           ],
         ),
         body: title == 'Fonte'

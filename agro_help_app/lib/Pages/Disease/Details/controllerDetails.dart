@@ -13,7 +13,7 @@ abstract class _ControllerDetailsBase with Store {
   @observable
   List<Widget> _images = <Widget>[];
   @observable
-  bool _alert = true;
+  bool _alerted = false;
   List<Widget> get images => _images;
 
   @action
@@ -23,17 +23,21 @@ abstract class _ControllerDetailsBase with Store {
   }
 
   @action
-  cleanImages() {
+  dispose() {
     this._images = <Widget>[];
+    _alerted = false;
   }
 
   checkScore(BuildContext context, double score) {
     if (score == 0)
       return;
-    else if (score < 90)
+    else if (score < 95 && !_alerted)
       _utils.alert(context,
           title: 'ALERTA\nResultado não preciso: ${score.toStringAsFixed(2)}%',
           desc:
-              'Para a foto enviada, houve uma previsão de apenas: ${score.toStringAsFixed(2)}%.\nRecomendamos sempre realizar uma consulta extra com um profissional especializado.');
+              'Para a foto enviada, houve uma previsão de apenas: ${score.toStringAsFixed(2)}%.\nRecomendamos sempre realizar uma consulta extra com um profissional especializado.',
+          btnOkOnPress: () {
+        _alerted = true;
+      });
   }
 }

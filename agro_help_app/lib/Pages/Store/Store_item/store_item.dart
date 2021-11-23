@@ -1,17 +1,20 @@
+import 'package:agro_help_app/Pages/Store/Store_item/controller_store_item.dart';
 import 'package:agro_help_app/Pages/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 Utils _utils = new Utils();
+ControllerStoreItem _controller = new ControllerStoreItem();
 
-class StoreIten extends StatelessWidget {
+class StoreIten extends StatefulWidget {
   final title;
   final img;
   final price;
-  final tamanho;
+  final List<String>? tamanho;
   final desc;
   final List<Color>? colors;
 
@@ -26,10 +29,22 @@ class StoreIten extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _StoreItenState createState() => _StoreItenState();
+}
+
+class _StoreItenState extends State<StoreIten> {
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: Center(child: _utils.simpleText(title, fontSize: 28, fontWeight: FontWeight.bold)),
+        title: Center(child: _utils.simpleText(widget.title, fontSize: 28, fontWeight: FontWeight.bold)),
         actions: [Image.asset('assets/img/logo.png')],
       ),
       body: SingleChildScrollView(
@@ -48,13 +63,13 @@ class StoreIten extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height / 3,
                       padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
-                      child: Image.asset(img, fit: BoxFit.scaleDown)),
+                      child: Image.asset(widget.img, fit: BoxFit.scaleDown)),
                 ],
               ),
               //PREÇO & avaliação
               Row(
                 children: [
-                  _utils.simpleTextSelectable(price, fontSize: 24, fontWeight: FontWeight.w600),
+                  _utils.simpleTextSelectable(widget.price, fontSize: 24, fontWeight: FontWeight.w600),
                   Spacer(),
                   _stars()
                 ],
@@ -62,14 +77,14 @@ class StoreIten extends StatelessWidget {
               //DESCRIÇÃO
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                child: _utils.simpleTextSelectable(desc,
+                child: _utils.simpleTextSelectable(widget.desc,
                     fontSize: 16, fontWeight: FontWeight.w600, textAlign: TextAlign.start),
               ),
               //TAMANHO
-              Row(
+              Column(
                 children: [
                   _utils.simpleTextSelectable('Tamanho: ', fontSize: 16, fontWeight: FontWeight.w700),
-                  _size()
+                  _size(context)
                 ],
               ),
               //CORES
@@ -82,11 +97,12 @@ class StoreIten extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: 50,
                     child: ListView.builder(
-                        itemCount: colors!.length,
+                        itemCount: widget.colors!.length,
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         itemBuilder: (context, i) {
-                          return Padding(padding: const EdgeInsets.fromLTRB(8, 4, 8, 0), child: _colors(colors![i]));
+                          return Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 4, 8, 0), child: _colors(widget.colors![i]));
                         }),
                   ),
                 ],
@@ -179,15 +195,29 @@ class StoreIten extends StatelessWidget {
     );
   }
 
-  Widget _size() {
-    return Wrap(
-      spacing: 8.0,
-      children: [
-        ElevatedButton(onPressed: null, child: _utils.simpleText('P', fontWeight: FontWeight.bold)),
-        ElevatedButton(onPressed: null, child: _utils.simpleText('M', fontWeight: FontWeight.bold)),
-        ElevatedButton(onPressed: () {}, child: _utils.simpleText('G', fontWeight: FontWeight.bold)),
-        ElevatedButton(onPressed: null, child: _utils.simpleText('GG', fontWeight: FontWeight.bold)),
-      ],
+  Widget _size(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      child: Wrap(
+        children: widget.tamanho!
+            .map(
+              (item) => Padding(
+                padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+                child: Observer(builder: (_) {
+                  return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: _controller.tamanhoSelecionado == item ? Theme.of(context).hintColor : Colors.grey,
+                      ),
+                      onPressed: () {
+                        _controller.tamanhoSelecionado = item;
+                      },
+                      child: _utils.simpleText(item, fontWeight: FontWeight.bold));
+                }),
+              ),
+            )
+            .toList()
+            .cast<Widget>(),
+      ),
     );
   }
 
@@ -211,14 +241,23 @@ class StoreIten extends StatelessWidget {
   }
 
   Widget _colors(Color color) {
-    return Container(
-      width: 24,
-      height: 24,
-      decoration: new BoxDecoration(
-        border: Border.all(color: Colors.blueAccent),
-        color: color,
-        shape: BoxShape.circle,
-      ),
-    );
+    return Observer(builder: (_) {
+      bool _colorSelected = _controller.colorsSelected == color;
+      return GestureDetector(
+        onTap: () {
+          _controller.colorsSelected = color;
+        },
+        child: Container(
+          width: 28,
+          height: 28,
+          decoration: new BoxDecoration(
+            border: Border.all(
+                color: _colorSelected ? Colors.blueAccent : Colors.grey.shade500, width: _colorSelected ? 3 : 1),
+            color: color,
+            shape: BoxShape.circle,
+          ),
+        ),
+      );
+    });
   }
 }
