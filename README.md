@@ -17,7 +17,7 @@ https://www.kaggle.com/datasets/emmarex/plantdisease
 
 #### O backend foi feito usando o firebase database e storage
 
-## Screenshots do aplicativo
+## SCREENSHOTS DO APLICATIVO
 
 ## Tela de dashboard da aplicação
 
