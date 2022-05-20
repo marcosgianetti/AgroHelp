@@ -13,7 +13,7 @@ https://www.kaggle.com/datasets/emmarex/plantdisease
 
 #### Para a criação da aplicação mobile foi utilizado o framework Flutter
 
-#### Para a genrência de estado da aplicação, foi usado Mobx e Provider
+#### Para a gerência de estado da aplicação, foi usado Mobx e Provider
 
 #### O backend foi feito usando o firebase database e storage
 
