@@ -1,6 +1,6 @@
 # AgroHelp
 
-## Projeto de TCC para o curso de Ciência da Computação
+### Projeto de TCC para o curso de Ciência da Computação
 
 ## IA
 
@@ -13,9 +13,11 @@ https://www.kaggle.com/datasets/emmarex/plantdisease
 
 #### Para a criação da aplicação mobile foi utilizado o framework Flutter
 
+#### Para a genrência de estado da aplicação, foi usado Mobx e Provider
+
 #### O backend foi feito usando o firebase database e storage
 
-#### Screenshots do aplicativo
+## Screenshots do aplicativo
 
 ## Tela de dashboard da aplicação
 
